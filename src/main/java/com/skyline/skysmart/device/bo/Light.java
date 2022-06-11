@@ -1,8 +1,9 @@
 package com.skyline.skysmart.device.bo;
 
 import com.skyline.skysmart.device.control.interfaces.Switchable;
-import lombok.Getter;
-import lombok.Setter;
+import com.skyline.skysmart.device.data.LightProperties;
+import com.skyline.skysmart.web.dao.LightDAO;
+import lombok.*;
 
 /**
  * [FEATURE INFO]<br/>
@@ -12,15 +13,13 @@ import lombok.Setter;
  * @create 2022/6/10 18:28
  * @since 1.0.0
  */
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Light implements Switchable {
 
-    private String deviceId;
-
-    public Light(String deviceId) {
-        this.deviceId = deviceId;
-    }
+    private LightDAO lightDAO;
+    private LightProperties properties;
 
     /**
      * turn on device at time

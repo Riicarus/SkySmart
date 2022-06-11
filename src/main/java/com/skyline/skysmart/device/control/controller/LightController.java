@@ -1,7 +1,9 @@
 package com.skyline.skysmart.device.control.controller;
 
+import com.skyline.skysmart.device.bo.BoBuilder;
 import com.skyline.skysmart.device.bo.Light;
 import com.skyline.skysmart.device.util.InstructionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
@@ -18,6 +20,9 @@ import java.util.Map;
 @Component("LightController")
 public class LightController extends DeviceController {
 
+    @Autowired
+    private BoBuilder boBuilder;
+
     /**
      * execute method according to instruction
      *
@@ -31,8 +36,11 @@ public class LightController extends DeviceController {
 
         String deviceId = params.get("deviceId");
 
+        // todo get light from LightConverter, construct LightDAO and LightProperties
+        Light light = boBuilder.buildLight(deviceId);
+
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            executeOperation(entry, new Light(deviceId));
+            executeOperation(entry, light);
         }
     }
 
