@@ -10,8 +10,18 @@ package com.skyline.skysmart.device.control.interfaces;
  */
 public interface Switchable {
 
-    void on();
+    /**
+     * turn on device at time
+     *
+     * @param time Long, time
+     */
+    void on(Long time);
 
-    void off();
+    /**
+     * turn of device at time
+     *
+     * @param time Long, time
+     */
+    void off(Long time);
 
 }

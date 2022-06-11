@@ -1,4 +1,4 @@
-package com.skyline.skysmart.device.control;
+package com.skyline.skysmart.device.control.controller;
 
 /**
  * [FEATURE INFO]<br/>

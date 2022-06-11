@@ -1,18 +1,18 @@
-package com.skyline.skysmart.device.control;
+package com.skyline.skysmart.device.control.controller;
 
-import com.skyline.skysmart.device.control.bo.Light;
+import com.skyline.skysmart.device.bo.Screen;
 import org.springframework.stereotype.Component;
 
 /**
  * [FEATURE INFO]<br/>
- * light control object
+ * screen controller
  *
  * @author Skyline
- * @create 2022/6/10 15:46
+ * @create 2022/6/10 23:14
  * @since 1.0.0
  */
-@Component("LightController")
-public class LightController extends DeviceController {
+@Component("ScreenController")
+public class ScreenController extends DeviceController {
 
     /**
      * execute method according to instruction
@@ -25,12 +25,11 @@ public class LightController extends DeviceController {
         System.out.println(instruction);
     }
 
-    public void turnOn(Light light) {
-        light.on();
+    public void turnOn(Screen screen, Long time) {
+        screen.on(time);
     }
 
-    public void turnOff(Light light) {
-        light.off();
+    public void turnOff(Screen screen, Long time) {
+        screen.off(time);
     }
-
 }
