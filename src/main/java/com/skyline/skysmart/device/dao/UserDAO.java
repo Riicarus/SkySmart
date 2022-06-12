@@ -1,4 +1,4 @@
-package com.skyline.skysmart.web.dao;
+package com.skyline.skysmart.device.dao;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "com.skyline.skysmart.web.dao.UserDAO", description = "user dao")
+@ApiModel(value = "com.skyline.skysmart.device.dao.UserDAO", description = "user dao")
 @TableName(value = "user")
 public class UserDAO {
 

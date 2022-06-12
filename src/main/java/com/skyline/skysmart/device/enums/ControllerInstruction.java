@@ -1,7 +1,7 @@
 package com.skyline.skysmart.device.enums;
 
-import com.skyline.skysmart.device.control.controller.LightController;
-import com.skyline.skysmart.device.control.controller.ScreenController;
+import com.skyline.skysmart.device.controller.LightController;
+import com.skyline.skysmart.device.controller.ScreenController;
 
 import java.util.HashMap;
 

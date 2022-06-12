@@ -1,8 +1,8 @@
 package com.skyline.skysmart.device.bo;
 
-import com.skyline.skysmart.device.control.interfaces.Switchable;
+import com.skyline.skysmart.device.bo.interfaces.Switchable;
 import com.skyline.skysmart.device.data.LightProperties;
-import com.skyline.skysmart.web.dao.LightDAO;
+import com.skyline.skysmart.device.dao.LightDAO;
 import lombok.*;
 
 /**

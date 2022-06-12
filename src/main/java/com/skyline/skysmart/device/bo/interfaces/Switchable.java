@@ -1,4 +1,4 @@
-package com.skyline.skysmart.device.control.interfaces;
+package com.skyline.skysmart.device.bo.interfaces;
 
 /**
  * [FEATURE INFO]<br/>

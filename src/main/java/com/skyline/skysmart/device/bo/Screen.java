@@ -1,6 +1,6 @@
 package com.skyline.skysmart.device.bo;
 
-import com.skyline.skysmart.device.control.interfaces.Switchable;
+import com.skyline.skysmart.device.bo.interfaces.Switchable;
 
 /**
  * [FEATURE INFO]<br/>
