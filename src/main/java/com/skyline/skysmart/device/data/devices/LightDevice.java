@@ -1,8 +1,6 @@
 package com.skyline.skysmart.device.data.devices;
 
 import com.skyline.skysmart.device.data.devices.interfaces.ILightDevice;
-import com.skyline.skysmart.device.data.dao.Light;
-import com.skyline.skysmart.device.data.po.LightProperties;
 import lombok.*;
 
 /**
@@ -19,8 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 public class LightDevice extends Device implements ILightDevice {
 
-    private Light light;
-    private LightProperties properties;
+
 
     /**
      * turn on device at time
