@@ -1,13 +1,9 @@
 package com.skyline.skysmart.device.controller;
 
-import com.skyline.skysmart.device.bo.BoBuilder;
-import com.skyline.skysmart.device.bo.Light;
-import com.skyline.skysmart.device.util.InstructionUtils;
+import com.skyline.skysmart.device.mapper.LightMapper;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * [FEATURE INFO]<br/>
@@ -17,8 +13,14 @@ import java.util.Map;
  * @create 2022/6/10 15:46
  * @since 1.0.0
  */
-@Component("LightController")
+@RestController
+@Api
 public class LightController {
 
+    private LightMapper lightMapper;
 
+    @Autowired
+    public void setLightMapper(LightMapper lightMapper) {
+        this.lightMapper = lightMapper;
+    }
 }

@@ -11,12 +11,13 @@ import com.skyline.skysmart.core.response.IErrorCode;
  * @since 1.0.0
  */
 public enum ResultCode implements IErrorCode {
-    SUCCESS(600, "操作成功"),
-    NO_PERMISSION(601, "没有权限"),
-    FAILED(602, "操作失败"),
-    ELEMENT_EXISTS(603, "对应元素已存在"),
-    NO_ELEMENT(604, "没有对应元素"),
-    VALIDATE_FAILED(605, "参数校验失败");
+    SUCCESS(600, "SUCCESS"),
+    NO_PERMISSION(601, "NO_PERMISSION"),
+    FAILED(602, "FAILED"),
+    NULL(603, "NULL"),
+    ELEMENT_EXISTS(604, "ELEMENT_EXISTS"),
+    NO_ELEMENT(604, "NO_ELEMENT"),
+    VALIDATE_FAILED(605, "VALIDATE_FAILED");
 
     private final int code;
     private final String message;

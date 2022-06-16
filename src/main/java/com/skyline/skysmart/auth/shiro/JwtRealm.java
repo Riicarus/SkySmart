@@ -1,15 +1,21 @@
 package com.skyline.skysmart.auth.shiro;
 
+import com.skyline.skysmart.auth.mapper.UserMapper;
 import com.skyline.skysmart.auth.util.JwtUtils;
+import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
+import com.skyline.skysmart.auth.data.dao.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.util.StringUtils;
+
+import java.util.HashSet;
 
 /**
  * [FEATURE INFO]<br/>
@@ -20,6 +26,12 @@ import org.springframework.util.StringUtils;
  * @since 1.0.0
  */
 public class JwtRealm extends AuthorizingRealm {
+
+    private UserMapper userMapper;
+
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -46,7 +58,7 @@ public class JwtRealm extends AuthorizingRealm {
         String account = JwtUtils.getInfo(token, "account");
 
         if (!StringUtils.hasLength(account)) {
-            Asserts.fail("authenticate failed: No account value in token!");
+            Asserts.fail(ResultCode.VALIDATE_FAILED);
         }
 
         verifyUser(account);
@@ -55,10 +67,26 @@ public class JwtRealm extends AuthorizingRealm {
     }
 
     private void verifyUser(String account) {
+        User user = userMapper.selectById(account);
 
+        if (user == null) {
+            Asserts.fail(ResultCode.NO_ELEMENT);
+        }
     }
 
     private AuthorizationInfo authUser(String account) {
-        return null;
+        User user = userMapper.selectById(account);
+
+        if (user == null) {
+            return null;
+        }
+
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        HashSet<String> stringPermissions = new HashSet<>();
+        // permission of user
+        stringPermissions.add("user:*:" + user.getUid());
+
+        info.addStringPermissions(stringPermissions);
+        return info;
     }
 }

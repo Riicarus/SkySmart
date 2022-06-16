@@ -1,4 +1,4 @@
-package com.skyline.skysmart.device.data;
+package com.skyline.skysmart.device.data.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * [FEATURE INFO]<br/>
- * Light properties, different device has different properties<br/>
- * Use properties to get LightDAO's properties json String,
+ * LightBO properties, different device has different properties<br/>
+ * Use properties to get ILightBO's properties json String,
  * to adapt to unpredictable device's properties<br/>
  * When using related services, check whether the properties exists first<br/>
  *

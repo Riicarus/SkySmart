@@ -1,8 +1,8 @@
-package com.skyline.skysmart.device.bo;
+package com.skyline.skysmart.device.data.bo;
 
-import com.skyline.skysmart.device.bo.interfaces.Switchable;
-import com.skyline.skysmart.device.data.LightProperties;
-import com.skyline.skysmart.device.dao.LightDAO;
+import com.skyline.skysmart.device.data.bo.interfaces.ILightBO;
+import com.skyline.skysmart.device.data.dao.Light;
+import com.skyline.skysmart.device.data.po.LightProperties;
 import lombok.*;
 
 /**
@@ -16,9 +16,9 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Light implements Switchable {
+public class LightBO implements ILightBO {
 
-    private LightDAO lightDAO;
+    private Light light;
     private LightProperties properties;
 
     /**
@@ -28,7 +28,7 @@ public class Light implements Switchable {
      */
     @Override
     public void on(Long time) {
-        System.out.println("Light will be turned on at time: " + time);
+        System.out.println("LightBO will be turned on at time: " + time);
     }
 
     /**
@@ -38,6 +38,6 @@ public class Light implements Switchable {
      */
     @Override
     public void off(Long time) {
-        System.out.println("Light will be turned off at time: " + time);
+        System.out.println("LightBO will be turned off at time: " + time);
     }
 }

@@ -1,7 +1,7 @@
 package com.skyline.skysmart.device.controller;
 
-import com.skyline.skysmart.device.bo.Screen;
-import org.springframework.stereotype.Component;
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * [FEATURE INFO]<br/>
@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
  * @create 2022/6/10 23:14
  * @since 1.0.0
  */
-@Component("ScreenController")
+@RestController
+@Api
 public class ScreenController{
 
 }

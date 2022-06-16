@@ -1,6 +1,6 @@
-package com.skyline.skysmart.device.bo;
+package com.skyline.skysmart.device.data.bo;
 
-import com.skyline.skysmart.device.bo.interfaces.Switchable;
+import com.skyline.skysmart.device.data.bo.interfaces.IScreenBO;
 
 /**
  * [FEATURE INFO]<br/>
@@ -10,7 +10,7 @@ import com.skyline.skysmart.device.bo.interfaces.Switchable;
  * @create 2022/6/10 23:15
  * @since 1.0.0
  */
-public class Screen implements Switchable {
+public class ScreenBO implements IScreenBO {
 
     /**
      * turn on device at time
