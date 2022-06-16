@@ -1,6 +1,10 @@
-package com.skyline.skysmart.device.data.bo;
+package com.skyline.skysmart.device.data.devices;
 
-import com.skyline.skysmart.device.data.bo.interfaces.IScreenBO;
+import com.skyline.skysmart.device.data.devices.interfaces.IScreenDevice;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * [FEATURE INFO]<br/>
@@ -10,7 +14,10 @@ import com.skyline.skysmart.device.data.bo.interfaces.IScreenBO;
  * @create 2022/6/10 23:15
  * @since 1.0.0
  */
-public class ScreenBO implements IScreenBO {
+@Data
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+public class ScreenDevice extends Device implements IScreenDevice {
 
     /**
      * turn on device at time

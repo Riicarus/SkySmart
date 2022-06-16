@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "com.skyline.skysmart.device.data.dao.ILightBO", description = "light dao")
+@ApiModel(value = "com.skyline.skysmart.device.data.dao.ILightDevice", description = "light dao")
 @TableName(value = "light")
 public class Light {
 

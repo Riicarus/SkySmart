@@ -8,10 +8,12 @@ import com.skyline.skysmart.auth.data.dto.UserAddParam;
 import com.skyline.skysmart.auth.data.dto.UserLoginDTO;
 import com.skyline.skysmart.auth.mapper.UserMapper;
 import com.skyline.skysmart.auth.service.interfaces.IUserService;
+import com.skyline.skysmart.core.enums.RedisKeyPrefix;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,12 +28,17 @@ import org.springframework.stereotype.Service;
 public class UserService implements IUserService {
 
     private UserMapper userMapper;
-
     private UserDataConverter userDataConverter;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
+    }
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     @Autowired
@@ -43,7 +50,7 @@ public class UserService implements IUserService {
     public IUserBO getUserBOByUid(String uid) {
         User user = userMapper.selectById(uid);
 
-        return userDataConverter.getUserBO(user);
+        return userDataConverter.constructUserBO(user);
     }
 
     @Override
@@ -52,7 +59,42 @@ public class UserService implements IUserService {
         userQueryWrapper.eq("username", username);
         User user = userMapper.selectOne(userQueryWrapper);
 
-        return userDataConverter.getUserBO(user);
+        return userDataConverter.constructUserBO(user);
+    }
+
+    /**
+     * Get UserBO by email
+     *
+     * @param email String
+     * @return IUserBO
+     */
+    @Override
+    public IUserBO getUserBOByEmail(String email) {
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("email", email);
+        User user = userMapper.selectOne(userQueryWrapper);
+
+        return userDataConverter.constructUserBO(user);
+    }
+
+    /**
+     * User login with email and verycode
+     *
+     * @param email    String
+     * @param verycode String
+     * @return UserLoginDTO
+     */
+    @Override
+    public UserLoginDTO loginByEmail(String email, String verycode) {
+        IUserBO userBO = getUserBOByEmail(email);
+        userBO.assertUserNotEmpty();
+
+        String code = (String) redisTemplate.opsForValue().get(RedisKeyPrefix.EMAIL_LOGIN_VERYCODE.getKeyPrefix() + email);
+        if (!verycode.equals(code)) {
+            Asserts.fail(ResultCode.FAILED);
+        }
+
+        return userDataConverter.castToUserLoginDTO(userBO);
     }
 
     /**
@@ -76,9 +118,8 @@ public class UserService implements IUserService {
             Asserts.fail(ResultCode.FAILED);
         }
 
-        return userDataConverter.getUserLoginDTO(userBO);
+        return userDataConverter.castToUserLoginDTO(userBO);
     }
-
 
     /**
      * user register
@@ -90,6 +131,40 @@ public class UserService implements IUserService {
         IUserBO userBO = userDataConverter.castToIUserBO(userAddParam);
 
         int res = userMapper.insert(userBO.getUser());
+        if (res != 1) {
+            Asserts.fail(ResultCode.FAILED);
+        }
+    }
+
+    /**
+     * change password with uid
+     *
+     * @param uid      String
+     * @param password String
+     */
+    @Override
+    public void changePassword(String uid, String password) {
+        IUserBO userBO = getUserBOByUid(uid);
+
+        userBO.setPassword(password);
+        int res = userMapper.updateById(userBO.getUser());
+        if (res != 1) {
+            Asserts.fail(ResultCode.FAILED);
+        }
+    }
+
+    /**
+     * Change username with uid
+     *
+     * @param uid      String
+     * @param username String
+     */
+    @Override
+    public void changeUsername(String uid, String username) {
+        IUserBO userBO = getUserBOByUid(uid);
+
+        userBO.setUsername(username);
+        int res = userMapper.updateById(userBO.getUser());
         if (res != 1) {
             Asserts.fail(ResultCode.FAILED);
         }

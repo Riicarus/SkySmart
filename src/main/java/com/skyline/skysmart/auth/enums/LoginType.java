@@ -1,11 +1,11 @@
 package com.skyline.skysmart.auth.enums;
 
 /**
- * <功能概述>
- * <login type of account>
+ * [FEATURE INFO]<br/>
+ * Login type of account
  *
- * @author 何锦川
- * @create 2022/4/20 16:39
+ * @author Skyline
+ * @create 2022/6/12 17:35
  * @since 1.0.0
  */
 public enum LoginType {

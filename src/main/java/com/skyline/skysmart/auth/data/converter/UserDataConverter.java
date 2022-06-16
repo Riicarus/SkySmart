@@ -36,13 +36,15 @@ public class UserDataConverter {
 
 
     /**
-     * cast User to IUserBO
+     * construct IUserBO
      *
      * @param user User
      * @return IUserBO
      */
-    public IUserBO getUserBO(User user) {
-        return new UserBO(user);
+    public IUserBO constructUserBO(User user) {
+        IUserBO userBO = new UserBO();
+        userBO.mapUser(user);
+        return userBO;
     }
 
     /**
@@ -51,7 +53,7 @@ public class UserDataConverter {
      * @param userBO IUserBO
      * @return UserLoginDTO
      */
-    public UserLoginDTO getUserLoginDTO(IUserBO userBO) {
+    public UserLoginDTO castToUserLoginDTO(IUserBO userBO) {
         if (userBO == null) {
             return new UserLoginDTO();
         }
@@ -95,7 +97,7 @@ public class UserDataConverter {
         String md5Password = md5Hash.toHex();
         user.setPassword(md5Password);
 
-        return new UserBO(user);
+        return constructUserBO(user);
     }
 
 }

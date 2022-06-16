@@ -1,6 +1,6 @@
-package com.skyline.skysmart.device.data.bo;
+package com.skyline.skysmart.device.data.devices;
 
-import com.skyline.skysmart.device.data.bo.interfaces.ILightBO;
+import com.skyline.skysmart.device.data.devices.interfaces.ILightDevice;
 import com.skyline.skysmart.device.data.dao.Light;
 import com.skyline.skysmart.device.data.po.LightProperties;
 import lombok.*;
@@ -14,9 +14,10 @@ import lombok.*;
  * @since 1.0.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class LightBO implements ILightBO {
+public class LightDevice extends Device implements ILightDevice {
 
     private Light light;
     private LightProperties properties;
@@ -28,7 +29,7 @@ public class LightBO implements ILightBO {
      */
     @Override
     public void on(Long time) {
-        System.out.println("LightBO will be turned on at time: " + time);
+        System.out.println("LightDevice will be turned on at time: " + time);
     }
 
     /**
@@ -38,6 +39,6 @@ public class LightBO implements ILightBO {
      */
     @Override
     public void off(Long time) {
-        System.out.println("LightBO will be turned off at time: " + time);
+        System.out.println("LightDevice will be turned off at time: " + time);
     }
 }

@@ -4,11 +4,14 @@ import com.skyline.skysmart.auth.data.bo.interfaces.IUserBO;
 import com.skyline.skysmart.auth.data.dao.User;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
+import com.skyline.skysmart.device.data.devices.Device;
 import org.apache.shiro.crypto.hash.Md5Hash;
+
+import java.util.HashMap;
 
 /**
  * [FEATURE INFO]<br/>
- * UserBO
+ * UserBO, consists of all business info of user, such as UserDAO, user's devices, user's preset
  *
  * @author Skyline
  * @create 2022/6/12 17:43
@@ -17,10 +20,7 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 public class UserBO implements IUserBO {
 
     private User user;
-
-    public UserBO(User user) {
-        this.user = user;
-    }
+    private final HashMap<String, Device> devices = new HashMap<>();
 
     @Override
     public void mapUser(User user) {
@@ -31,6 +31,18 @@ public class UserBO implements IUserBO {
     public User getUser() {
         assertUserNotEmpty();
         return user;
+    }
+
+    @Override
+    public void mapDevice(Device device) {
+        if (device != null) {
+            this.devices.put(device.toString(), device);
+        }
+    }
+
+    @Override
+    public Device getDevice(String name) {
+        return this.devices.get(name);
     }
 
     @Override

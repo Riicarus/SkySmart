@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * [FEATURE INFO]<br/>
- * LightBO properties, different device has different properties<br/>
- * Use properties to get ILightBO's properties json String,
+ * LightDevice properties, different device has different properties<br/>
+ * Use properties to get ILightDevice's properties json String,
  * to adapt to unpredictable device's properties<br/>
  * When using related services, check whether the properties exists first<br/>
  *

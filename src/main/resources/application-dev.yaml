@@ -45,8 +45,8 @@ mybatis-plus:
   # entity别名
   type-aliases-package: com.chongjun.po
   # 开启sql日志
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #configuration:
+  #  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # 自定义配置
 config:
