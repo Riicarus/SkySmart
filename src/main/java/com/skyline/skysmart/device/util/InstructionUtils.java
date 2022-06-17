@@ -1,7 +1,5 @@
 package com.skyline.skysmart.device.util;
 
-import com.skyline.skysmart.device.enums.ControllerInstruction;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,14 +20,14 @@ public class InstructionUtils {
     /**
      * generate device instruction
      *
-     * @param instruction ControllerInstruction, use this to get device type
+     * @param deviceType String, device type
      * @param params HashMap, param of key and value
      * @return String, instruction
      */
-    public static String generate(ControllerInstruction instruction, HashMap<String, String> params) {
+    public static String generate(String deviceType, HashMap<String, String> params) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(instruction.getInstruction());
+        sb.append(deviceType);
 
         for (Map.Entry<String, String> entry : params.entrySet()) {
             sb.append(PARAM_SEPARATOR).append(entry.getKey()).append(K_V_LINKER).append(entry.getValue());

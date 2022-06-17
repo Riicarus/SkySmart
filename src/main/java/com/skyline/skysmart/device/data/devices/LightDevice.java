@@ -13,11 +13,8 @@ import lombok.*;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
 @NoArgsConstructor
 public class LightDevice extends Device implements ILightDevice {
-
-
 
     /**
      * turn on device at time

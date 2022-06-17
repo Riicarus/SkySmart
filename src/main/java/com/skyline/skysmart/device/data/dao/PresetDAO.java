@@ -28,6 +28,10 @@ public class PresetDAO {
     @ApiModelProperty("unique id of preset")
     private String uuid;
 
+    @TableField("name")
+    @ApiModelProperty("name of properties")
+    private String name;
+
     @TableField("properties")
     @ApiModelProperty("properties map json")
     private String properties;
