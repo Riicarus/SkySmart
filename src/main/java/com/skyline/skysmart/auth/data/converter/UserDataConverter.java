@@ -34,7 +34,6 @@ public class UserDataConverter {
         return INSTANCE;
     }
 
-
     /**
      * construct IUserBO
      *

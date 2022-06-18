@@ -20,14 +20,14 @@ public class InstructionUtils {
     /**
      * generate device instruction
      *
-     * @param deviceType String, device type
+     * @param deviceId String, unique id of device
      * @param params HashMap, param of key and value
      * @return String, instruction
      */
-    public static String generate(String deviceType, HashMap<String, String> params) {
+    public static String generate(String deviceId, HashMap<String, String> params) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(deviceType);
+        sb.append(deviceId);
 
         for (Map.Entry<String, String> entry : params.entrySet()) {
             sb.append(PARAM_SEPARATOR).append(entry.getKey()).append(K_V_LINKER).append(entry.getValue());
