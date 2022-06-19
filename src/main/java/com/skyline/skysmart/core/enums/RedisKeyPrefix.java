@@ -11,7 +11,8 @@ package com.skyline.skysmart.core.enums;
 public enum RedisKeyPrefix {
     BIND_EMAIL_VERYCODE("BIND_EMAIL_VERYCODE", "EMAIL_BINDING_VERYCODE_"),
     SET_PASS_VERYCODE("SET_PASS_VERYCODE", "SET_PASS_VERYCODE_"),
-    EMAIL_LOGIN_VERYCODE("EMAIL_LOGIN_VERYCODE", "EMAIL_LOGIN_VERYCODE_");
+    EMAIL_LOGIN_VERYCODE("EMAIL_LOGIN_VERYCODE", "EMAIL_LOGIN_VERYCODE_"),
+    DEVICE_NET_INFO("DEVICE_NET_INFO", "DEVICE_NET_INFO_");
 
     private final String keyType;
     private final String keyPrefix;

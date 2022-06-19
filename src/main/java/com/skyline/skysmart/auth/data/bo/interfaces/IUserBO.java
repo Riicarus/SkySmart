@@ -1,7 +1,7 @@
 package com.skyline.skysmart.auth.data.bo.interfaces;
 
 import com.skyline.skysmart.auth.data.dao.User;
-import com.skyline.skysmart.device.data.devices.Device;
+import com.skyline.skysmart.device.data.bo.interfaces.IDeviceUserRelationBO;
 
 /**
  * [FEATURE INFO]<br/>
@@ -17,9 +17,9 @@ public interface IUserBO {
 
     User getUser();
 
-    void mapDevice(Device device);
+    void mapDevice(IDeviceUserRelationBO device);
 
-    Device getDevice(String name);
+    IDeviceUserRelationBO getDevice(String name);
 
     String getUid();
 

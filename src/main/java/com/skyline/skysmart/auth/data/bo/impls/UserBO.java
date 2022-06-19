@@ -4,7 +4,7 @@ import com.skyline.skysmart.auth.data.bo.interfaces.IUserBO;
 import com.skyline.skysmart.auth.data.dao.User;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
-import com.skyline.skysmart.device.data.devices.Device;
+import com.skyline.skysmart.device.data.bo.interfaces.IDeviceUserRelationBO;
 import org.apache.shiro.crypto.hash.Md5Hash;
 
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class UserBO implements IUserBO {
 
     private User user;
-    private final HashMap<String, Device> devices = new HashMap<>();
+    private final HashMap<String, IDeviceUserRelationBO> devices = new HashMap<>();
 
     @Override
     public void mapUser(User user) {
@@ -34,14 +34,14 @@ public class UserBO implements IUserBO {
     }
 
     @Override
-    public void mapDevice(Device device) {
+    public void mapDevice(IDeviceUserRelationBO device) {
         if (device != null) {
             this.devices.put(device.toString(), device);
         }
     }
 
     @Override
-    public Device getDevice(String name) {
+    public IDeviceUserRelationBO getDevice(String name) {
         return this.devices.get(name);
     }
 

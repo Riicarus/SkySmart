@@ -1,5 +1,9 @@
 package com.skyline.skysmart.device.util;
 
+import com.skyline.skysmart.core.enums.ResultCode;
+import com.skyline.skysmart.core.exception.Asserts;
+import org.springframework.util.StringUtils;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -52,6 +56,34 @@ public class InstructionUtils {
         }
 
         return params;
+    }
+
+    /**
+     * get deviceId from instruction
+     *
+     * @param instruction String
+     * @return String, deviceId
+     */
+    public static String getDeviceId(String instruction) {
+        if (!StringUtils.hasLength(instruction)) {
+            Asserts.fail(ResultCode.NULL);
+        }
+        String[] strs = instruction.split(PARAM_SEPARATOR);
+        return strs[0];
+    }
+
+    /**
+     * get sub instruction from instruction
+     *
+     * @param instruction String
+     * @return String, sub instruction
+     */
+    public static String getSubInstruction(String instruction) {
+        if (!StringUtils.hasLength(instruction)) {
+            Asserts.fail(ResultCode.NULL);
+        }
+        String[] strs = instruction.split(PARAM_SEPARATOR);
+        return instruction.substring(strs[0].length() + 1);
     }
 
 }
