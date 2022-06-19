@@ -21,6 +21,7 @@ public class DeviceUserRelationBO implements IDeviceUserRelationBO {
     private DeviceUserRelationDAO deviceUserRelationDAO;
     private HashMap<String, HashMap<String, String>> presetMap = new HashMap<>();
     private DeviceDAO deviceDAO;
+    // todo add a variable to flag status here, status: [off, on, sleep, ...]
 
     /**
      * set device user relation dao

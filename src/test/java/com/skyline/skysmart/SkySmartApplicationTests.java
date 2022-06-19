@@ -3,7 +3,7 @@ package com.skyline.skysmart;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.skyline.skysmart.auth.service.interfaces.IUserService;
-import com.skyline.skysmart.device.data.control.DeviceControlCenter;
+import com.skyline.skysmart.device.control.DeviceControlCenter;
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
 import com.skyline.skysmart.device.util.InstructionUtils;
 import org.junit.jupiter.api.Test;

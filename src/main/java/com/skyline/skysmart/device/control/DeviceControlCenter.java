@@ -1,6 +1,8 @@
-package com.skyline.skysmart.device.data.control;
+package com.skyline.skysmart.device.control;
 
 import com.skyline.skysmart.core.enums.RedisKeyPrefix;
+import com.skyline.skysmart.core.enums.ResultCode;
+import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.dto.DeviceControlRequest;
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
 import com.skyline.skysmart.device.util.InstructionUtils;
@@ -34,7 +36,7 @@ public class DeviceControlCenter {
      *
      * @param info DeviceInternetInfo
      */
-    public void register(DeviceInternetInfo info) {
+    public void  register(DeviceInternetInfo info) {
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
         String key = RedisKeyPrefix.DEVICE_NET_INFO.getKeyPrefix() + info.getDeviceId();
@@ -55,6 +57,10 @@ public class DeviceControlCenter {
         String key = RedisKeyPrefix.DEVICE_NET_INFO.getKeyPrefix() + deviceId;
         HashMap<String, String> infoParams = (HashMap<String, String>) hashOperations.entries(key);
 
+        if (infoParams.isEmpty()) {
+            Asserts.fail(ResultCode.NO_ELEMENT);
+        }
+
         return new DeviceInternetInfo(deviceId, infoParams.get("IP"),
                 infoParams.get("Port"), infoParams.get("MAC"));
     }
@@ -65,7 +71,7 @@ public class DeviceControlCenter {
      * @param instruction String
      * @return DeviceControlRequest
      */
-    public DeviceControlRequest generateControlRequest(String instruction) {
+    private DeviceControlRequest generateControlRequest(String instruction) {
         String deviceId = InstructionUtils.getDeviceId(instruction);
         DeviceInternetInfo info = getDeviceInternetInfo(deviceId);
 
@@ -81,7 +87,18 @@ public class DeviceControlCenter {
      *
      * @param deviceControlRequest DeviceControlRequest
      */
-    public void sendRequest(DeviceControlRequest deviceControlRequest) {
+    private void sendRequest(DeviceControlRequest deviceControlRequest) {
         // todo push request into Kafka
+        System.out.println(deviceControlRequest.toString());
+    }
+
+    /**
+     * dispatch instruction to device
+     *
+     * @param instruction String
+     */
+    public void doDispatch(String instruction) {
+        DeviceControlRequest request = generateControlRequest(instruction);
+        sendRequest(request);
     }
 }
