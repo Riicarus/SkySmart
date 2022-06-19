@@ -1,0 +1,55 @@
+server:
+  port: 9000
+  tomcat:
+    uri-encoding: utf-8
+
+spring:
+  datasource:
+    username: root
+    password: 314159.com
+    url: jdbc:mysql://localhost:3306/skysmart?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      maxActive: 20
+  mail:
+    host: smtp.qq.com #发送邮件服务器
+    username: 2031344901@qq.com #QQ邮箱
+    password: tguddahoszigdfjb #客户端授权码
+    protocol: smtp #发送邮件协议
+    properties:
+      mail:
+        smtp:
+          auth: true
+          port: 465 #端口号465或587
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+    default-encoding: utf-8
+  servlet:
+    multipart:
+      max-request-size: 1MB
+      max-file-size: 1MB
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    #password:
+    connect-timeout: 30000
+    client-type: lettuce
+
+# mybatis-plus配置
+mybatis-plus:
+  # entity别名
+  type-aliases-package: com.chongjun.po
+  # 开启sql日志
+  #configuration:
+  #  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 自定义配置
+config:
+  # 服务器照片存储位置
+  file:
+    storepath:
