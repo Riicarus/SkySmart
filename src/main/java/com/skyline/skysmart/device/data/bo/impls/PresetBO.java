@@ -6,8 +6,9 @@ import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.bo.interfaces.IPresetBO;
 import com.skyline.skysmart.device.data.dao.PresetDAO;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 
-import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -20,7 +21,7 @@ import java.util.HashMap;
 public class PresetBO implements IPresetBO {
 
     private PresetDAO presetDAO;
-    private HashMap<String, String> properties;
+    private Queue<InstructionUnit> instructionUnitQueue;
 
     /**
      * set preset dao
@@ -44,47 +45,57 @@ public class PresetBO implements IPresetBO {
     }
 
     /**
-     * bind properties of preset
+     * bind instructionUnitQueue of preset
      *
-     * @param properties String
+     * @param instructionUnitJson String
      */
     @Override
-    public void mapProperties(String properties) {
-        this.properties = JSONObject.parseObject(properties, new TypeReference<HashMap<String, String>>(){});
+    public void mapInstructionUnitQueue(String instructionUnitJson) {
+        this.instructionUnitQueue = JSONObject.parseObject(instructionUnitJson, new TypeReference<Queue<InstructionUnit>>(){});
     }
 
     /**
-     * set PresetDAO's properties String
+     * bind instructionUnitQueue of preset
      *
-     * @param properties String
+     * @param instructionUnitQueue Queue
      */
     @Override
-    public void setProperties(String properties) {
+    public void mapInstructionUnitQueue(Queue<InstructionUnit> instructionUnitQueue) {
+        this.instructionUnitQueue = instructionUnitQueue;
+    }
+
+    /**
+     * set PresetDAO's instructionUnitQueue String
+     *
+     * @param instructionUnitJson String
+     */
+    @Override
+    public void setInstructionUnitJson(String instructionUnitJson) {
         assertPresetDAONotEmpty();
-        this.presetDAO.setProperties(properties);
+        this.presetDAO.setInstructionUnitJson(instructionUnitJson);
     }
 
     /**
-     * set PresetDAO's properties String
+     * set PresetDAO's instructionUnitQueue String
      *
-     * @param propertiesMap HashMap
+     * @param instructionUnitQueue Queue
      */
     @Override
-    public void setProperties(HashMap<String, String> propertiesMap) {
+    public void setInstructionUnitJson(Queue<InstructionUnit> instructionUnitQueue) {
         assertPresetDAONotEmpty();
-        String properties = new org.json.JSONObject(propertiesMap).toString();
-        this.presetDAO.setProperties(properties);
+        String instructionUnitJson = JSONObject.toJSONString(instructionUnitQueue);
+        this.presetDAO.setInstructionUnitJson(instructionUnitJson);
     }
 
     /**
-     * get properties of preset
+     * get instructionUnitQueue of preset
      *
-     * @return HashMap
+     * @return Queue, instructionUnitQueue
      */
     @Override
-    public HashMap<String, String> getProperties() {
-        assertPropertiesNotEmpty();
-        return this.properties;
+    public Queue<InstructionUnit> getInstructionUnitQueue() {
+        assertInstructionUnitQueueNotEmpty();
+        return this.instructionUnitQueue;
     }
 
     /**
@@ -120,11 +131,11 @@ public class PresetBO implements IPresetBO {
     }
 
     /**
-     * assert properties not empty
+     * assert instructionUnitQueue not empty
      */
     @Override
-    public void assertPropertiesNotEmpty() {
-        if (properties == null || properties.isEmpty()) {
+    public void assertInstructionUnitQueueNotEmpty() {
+        if (instructionUnitQueue == null || instructionUnitQueue.isEmpty()) {
             Asserts.fail(ResultCode.NULL);
         }
     }

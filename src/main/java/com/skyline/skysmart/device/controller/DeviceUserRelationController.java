@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2022/6/20 0:13
  * @since 1.0.0
  */
-@Api(tags = {"device user relation controller"})
+@Api(tags = {"DeviceUserRelationController"})
 @RestController
 public class DeviceUserRelationController {
 }

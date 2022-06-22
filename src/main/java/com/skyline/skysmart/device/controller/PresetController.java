@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2022/6/20 0:17
  * @since 1.0.0
  */
-@Api(tags = {"preset controller"})
+@Api(tags = {"PresetController"})
 @RestController
 public class PresetController {
 }

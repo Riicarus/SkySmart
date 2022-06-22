@@ -52,6 +52,9 @@ public class PresetService implements IPresetService {
 
         if (presetDAOList.size() == 0) {
             System.out.println("NO_DEFAULT_PRESET");
+            return;
+        } else {
+            System.out.println("Default preset loaded, number: " + presetDAOList.size());
         }
 
         // cache presets to redis

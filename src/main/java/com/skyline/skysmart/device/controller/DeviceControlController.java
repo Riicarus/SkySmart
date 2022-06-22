@@ -6,6 +6,7 @@ import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.core.response.ResponseResult;
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 import com.skyline.skysmart.device.service.impls.DeviceControlService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -23,7 +24,7 @@ import java.util.HashMap;
  * @create 2022/6/20 0:08
  * @since 1.0.0
  */
-@Api(tags = {"device control request controller"})
+@Api(tags = {"DeviceControlController"})
 @RestController
 public class DeviceControlController {
 
@@ -35,7 +36,7 @@ public class DeviceControlController {
     }
 
     @ApiOperation("register device internet information")
-    @PostMapping(value = "/device/register", produces = {"application/json"})
+    @PostMapping("/device/register")
     public ResponseResult<String> register(
             @RequestBody DeviceInternetInfo info
     ) {
@@ -48,7 +49,7 @@ public class DeviceControlController {
     }
 
     @ApiOperation("turn service to work status")
-    @PostMapping(value = "/device/control/on", produces = {"application/json"})
+    @PostMapping("/device/control/on")
     public ResponseResult<String> turnOn(
             @RequestParam("deviceId") String deviceId,
             @RequestParam(value = "time", required = false) Long time
@@ -63,7 +64,7 @@ public class DeviceControlController {
     }
 
     @ApiOperation("turn service to sleep status")
-    @PostMapping(value = "/device/control/off", produces = {"application/json"})
+    @PostMapping("/device/control/off")
     public ResponseResult<String> turnOff(
             @RequestParam("deviceId") String deviceId,
             @RequestParam(value = "time", required = false) Long time
@@ -78,7 +79,7 @@ public class DeviceControlController {
     }
 
     @ApiOperation("handle multi instructions request")
-    @PostMapping(value = "/device/control/multi", produces = {"application/json"})
+    @PostMapping("/device/control/multi")
     public ResponseResult<String> multiInstructions(
             @RequestParam("deviceId") String deviceId,
             @RequestParam("params") String paramsJson
@@ -87,8 +88,8 @@ public class DeviceControlController {
             Asserts.fail(ResultCode.VALIDATE_FAILED);
         }
 
-        HashMap<String, String> paramsMap = JSONObject.parseObject(paramsJson, new TypeReference<HashMap<String, String>>(){});
-        deviceControlService.handleMulti(deviceId, paramsMap);
+        Queue<InstructionUnit> unitQueue = JSONObject.parseObject(paramsJson, new TypeReference<Queue<InstructionUnit>>(){});
+        deviceControlService.handleMulti(deviceId, unitQueue);
 
         return ResponseResult.success("Handle multi instructions succeeded!");
     }

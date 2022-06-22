@@ -2,7 +2,7 @@ package com.skyline.skysmart.device.data.bo.interfaces;
 
 import com.skyline.skysmart.device.data.dao.SceneDAO;
 
-import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -40,21 +40,21 @@ public interface ISceneBO {
      *
      * @param instructionsJson String, Json type
      */
-    void setInstructions(String instructionsJson);
+    void setInstructionsJson(String instructionsJson);
 
     /**
-     * set instructions of SceneDAO in HashMap type
+     * set instructions of SceneDAO in Queue type
      *
-     * @param instructionsMap HashMap
+     * @param unitQueue Queue, instruction queue
      */
-    void setInstructions(HashMap<String, String> instructionsMap);
+    void setInstructionsJson(Queue<String> unitQueue);
 
     /**
-     * get instructions map of SceneBO
+     * get instruction unit queue of SceneBO
      *
-     * @return HashMap
+     * @return Queue
      */
-    HashMap<String, String> getInstructions();
+    Queue<String> getInstructionQueue();
 
     /**
      * get scene name
@@ -92,5 +92,5 @@ public interface ISceneBO {
     /**
      * assert instructions map not empty
      */
-    void assertInstructionsMapNotEmpty();
+    void assertInstructionQueueNotEmpty();
 }

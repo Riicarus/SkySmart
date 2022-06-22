@@ -2,12 +2,13 @@ package com.skyline.skysmart.device.service.impls;
 
 import com.skyline.skysmart.device.control.DeviceControlCenter;
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 import com.skyline.skysmart.device.service.interfaces.IDeviceControlService;
 import com.skyline.skysmart.device.util.InstructionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * [FEATURE INFO]<br/>
@@ -47,10 +48,12 @@ public class DeviceControlService implements IDeviceControlService {
     public void turnOn(String deviceId, Long time) {
         time = (time == null) ? 0 : time;
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("on", time.toString());
+        Queue<InstructionUnit> unitQueue = new LinkedList<>();
+        ArrayList<String> params = new ArrayList<>();
+        params.add(time.toString());
+        unitQueue.add(new InstructionUnit("on", params));
 
-        String instruction = InstructionUtils.generate(deviceId, params);
+        String instruction = InstructionUtils.generate(deviceId, unitQueue);
         deviceControlCenter.doDispatch(instruction);
     }
 
@@ -64,10 +67,12 @@ public class DeviceControlService implements IDeviceControlService {
     public void turnOff(String deviceId, Long time) {
         time = (time == null) ? 0 : time;
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("off", time.toString());
+        Queue<InstructionUnit> unitQueue = new LinkedList<>();
+        ArrayList<String> params = new ArrayList<>();
+        params.add(time.toString());
+        unitQueue.add(new InstructionUnit("off", params));
 
-        String instruction = InstructionUtils.generate(deviceId, params);
+        String instruction = InstructionUtils.generate(deviceId, unitQueue);
         deviceControlCenter.doDispatch(instruction);
     }
 
@@ -75,11 +80,11 @@ public class DeviceControlService implements IDeviceControlService {
      * handle multi instructions
      *
      * @param deviceId String
-     * @param params   HashMap, contains operations and their param
+     * @param unitQueue Queue, queue of instruction units
      */
     @Override
-    public void handleMulti(String deviceId, HashMap<String, String> params) {
-        String instruction = InstructionUtils.generate(deviceId, params);
+    public void handleMulti(String deviceId, Queue<InstructionUnit> unitQueue) {
+        String instruction = InstructionUtils.generate(deviceId, unitQueue);
         deviceControlCenter.doDispatch(instruction);
     }
 }

@@ -5,8 +5,10 @@ import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.bo.interfaces.IDeviceUserRelationBO;
 import com.skyline.skysmart.device.data.dao.DeviceDAO;
 import com.skyline.skysmart.device.data.dao.DeviceUserRelationDAO;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 
 import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -19,7 +21,7 @@ import java.util.HashMap;
 public class DeviceUserRelationBO implements IDeviceUserRelationBO {
 
     private DeviceUserRelationDAO deviceUserRelationDAO;
-    private HashMap<String, HashMap<String, String>> presetMap = new HashMap<>();
+    private HashMap<String, Queue<InstructionUnit>> presetMap = new HashMap<>();
     private DeviceDAO deviceDAO;
     // todo add a variable to flag status here, status: [off, on, sleep, ...]
 
@@ -61,7 +63,7 @@ public class DeviceUserRelationBO implements IDeviceUserRelationBO {
      */
     @Override
     public void setDevicePreset(PresetBO presetBO) {
-        this.presetMap.put(presetBO.getPresetName(), presetBO.getProperties());
+        this.presetMap.put(presetBO.getPresetName(), presetBO.getInstructionUnitQueue());
     }
 
     /**
@@ -70,7 +72,7 @@ public class DeviceUserRelationBO implements IDeviceUserRelationBO {
      * @param presetMap HashMap
      */
     @Override
-    public void setDevicePreset(HashMap<String, HashMap<String, String>> presetMap) {
+    public void setDevicePreset(HashMap<String, Queue<InstructionUnit>> presetMap) {
         this.presetMap = presetMap;
     }
 

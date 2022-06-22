@@ -41,7 +41,7 @@ public class SceneDAO {
     private Boolean active;
 
     @TableField("instructions_json")
-    @ApiModelProperty("json type of instructions")
+    @ApiModelProperty("json type of instructions, raw type: Queue<String")
     private String instructionsJson;
 
 }

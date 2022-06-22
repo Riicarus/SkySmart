@@ -33,7 +33,7 @@ public class PresetDataConverter {
     public IPresetBO constructPresetBO(PresetDAO presetDAO) {
         IPresetBO presetBO = new PresetBO();
         presetBO.mapPresetDAO(presetDAO);
-        presetBO.mapProperties(presetDAO.getProperties());
+        presetBO.mapInstructionUnitQueue(presetDAO.getInstructionUnitJson());
         return presetBO;
     }
 

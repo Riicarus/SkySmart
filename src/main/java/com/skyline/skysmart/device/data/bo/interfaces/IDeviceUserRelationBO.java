@@ -3,8 +3,10 @@ package com.skyline.skysmart.device.data.bo.interfaces;
 import com.skyline.skysmart.device.data.bo.impls.DeviceBO;
 import com.skyline.skysmart.device.data.bo.impls.PresetBO;
 import com.skyline.skysmart.device.data.dao.DeviceUserRelationDAO;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 
 import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -49,7 +51,7 @@ public interface IDeviceUserRelationBO {
      *
      * @param presetMap HashMap
      */
-    void setDevicePreset(HashMap<String, HashMap<String, String>> presetMap);
+    void setDevicePreset(HashMap<String, Queue<InstructionUnit>> presetMap);
 
     /**
      * assert device user relation not empty

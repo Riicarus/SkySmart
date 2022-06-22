@@ -2,11 +2,10 @@ package com.skyline.skysmart.device.util;
 
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * [FEATURE INFO]<br/>
@@ -18,44 +17,68 @@ import java.util.Map;
  */
 public class InstructionUtils {
 
-    public static final String PARAM_SEPARATOR = "&";
+    public static final String UNIT_SEPARATOR = "&";
     public static final String K_V_LINKER = "=";
+    public static final String PARAM_SEPARATOR = ",";
 
     /**
      * generate device instruction
      *
      * @param deviceId String, unique id of device
-     * @param params HashMap, param of key and value
+     * @param unitQueue Queue, queue of instruction units
      * @return String, instruction
      */
-    public static String generate(String deviceId, HashMap<String, String> params) {
+    public static String generate(String deviceId, Queue<InstructionUnit> unitQueue) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(deviceId);
 
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            sb.append(PARAM_SEPARATOR).append(entry.getKey()).append(K_V_LINKER).append(entry.getValue());
+        for (InstructionUnit instructionUnit : unitQueue) {
+
+            sb.append(UNIT_SEPARATOR).append(instructionUnit.getAction()).append(K_V_LINKER);
+
+            List<String> params = instructionUnit.getParams();
+            if (params == null || params.isEmpty()) {
+                Asserts.fail(ResultCode.FAILED);
+            }
+
+            for (int i = 0; i < params.size(); i++) {
+                String param = params.get(i);
+
+                if (i == 0) {
+                    sb.append(param);
+                } else {
+                    sb.append(PARAM_SEPARATOR).append(param);
+                }
+            }
         }
+
 
         return sb.toString();
     }
 
     /**
-     * parse sub instruction to HashMap params
+     * parse sub instruction to Queue of unit
      *
-     * @param instruction String, sub instruction of instruct sent to device controller, which contains params
-     * @return HashMap, params
+     * @param instruction String, sub instruction of instruct sent to device controller, which contains instruction units
+     * @return Queue, unit queue
      */
-    public static LinkedHashMap<String, String> parse(String instruction) {
-        LinkedHashMap<String, String> params = new LinkedHashMap<>();
+    public static Queue<InstructionUnit> parse(String instruction) {
+        Queue<InstructionUnit> unitQueue = new LinkedList<>();
 
-        String[] strs = instruction.split(PARAM_SEPARATOR);
-        for (String str : strs) {
-            String[] parts = str.split(K_V_LINKER);
-            params.put(parts[0], parts[1]);
+        String[] unitStrs = instruction.split(UNIT_SEPARATOR);
+        for (String unitStr : unitStrs) {
+            // "K=V" ==> [Action, Params]
+            String[] k_v_parts = unitStr.split(K_V_LINKER);
+            String action = k_v_parts[0];
+            // Params => [param_1, param_2, ...]
+            String[] params = k_v_parts[1].split(PARAM_SEPARATOR);
+
+            InstructionUnit unit = new InstructionUnit(action, Arrays.asList(params));
+            unitQueue.add(unit);
         }
 
-        return params;
+        return unitQueue;
     }
 
     /**
@@ -68,7 +91,7 @@ public class InstructionUtils {
         if (!StringUtils.hasLength(instruction)) {
             Asserts.fail(ResultCode.NULL);
         }
-        String[] strs = instruction.split(PARAM_SEPARATOR);
+        String[] strs = instruction.split(UNIT_SEPARATOR);
         return strs[0];
     }
 
@@ -82,7 +105,7 @@ public class InstructionUtils {
         if (!StringUtils.hasLength(instruction)) {
             Asserts.fail(ResultCode.NULL);
         }
-        String[] strs = instruction.split(PARAM_SEPARATOR);
+        String[] strs = instruction.split(UNIT_SEPARATOR);
         return instruction.substring(strs[0].length() + 1);
     }
 

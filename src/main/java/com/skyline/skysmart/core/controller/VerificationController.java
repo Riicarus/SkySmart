@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @create 2022/6/16 15:20
  * @since 1.0.0
  */
-@Api(tags = {"verification-controller"})
+@Api(tags = {"VerificationController"})
 @RestController
 public class VerificationController {
 
@@ -41,8 +41,8 @@ public class VerificationController {
         this.redisTemplate = redisTemplate;
     }
 
-    @ApiOperation(value = "send email binding verification code")
-    @GetMapping(value = "/verification/emailBinding", produces = {"application/json"})
+    @ApiOperation("send email binding verification code")
+    @GetMapping("/verification/emailBinding")
     public ResponseResult<String> getBindEmailVeryCode(
             @RequestParam("uid") String uid,
             @RequestParam("email") String email
@@ -65,8 +65,8 @@ public class VerificationController {
         return ResponseResult.success("Send verification succeeded!");
     }
 
-    @ApiOperation(value = "send reset password verification code")
-    @GetMapping(value = "/verification/passChange", produces = {"application/json"})
+    @ApiOperation("send reset password verification code")
+    @GetMapping("/verification/passChange")
     public ResponseResult<String> getChangeSecondPassVeryCode(
             @RequestParam("uid") String uid,
             @RequestParam("email") String email
@@ -87,8 +87,8 @@ public class VerificationController {
         return ResponseResult.success("Send verification succeeded!");
     }
 
-    @ApiOperation(value = "send reset password verification code")
-    @GetMapping(value = "/verification/emailLogin", produces = {"application/json"})
+    @ApiOperation("send reset password verification code")
+    @GetMapping("/verification/emailLogin")
     public ResponseResult<String> getEmailLoginVeryCode(
             @RequestParam("email") String email
     ) {

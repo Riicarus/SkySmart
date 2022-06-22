@@ -32,8 +32,8 @@ public class PresetDAO {
     @ApiModelProperty("name of properties")
     private String name;
 
-    @TableField("properties")
-    @ApiModelProperty("properties map json")
-    private String properties;
+    @TableField("instruction_unit_json")
+    @ApiModelProperty("instruction unit in json type")
+    private String instructionUnitJson;
 
 }

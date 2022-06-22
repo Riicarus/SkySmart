@@ -4,13 +4,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.skyline.skysmart.core.enums.RedisKeyPrefix;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
+import com.skyline.skysmart.device.data.bo.interfaces.ISceneBO;
+import com.skyline.skysmart.device.data.converter.SceneDataConverter;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
+import com.skyline.skysmart.device.data.dto.SceneAddParam;
 import com.skyline.skysmart.device.mapper.SceneMapper;
 import com.skyline.skysmart.device.service.interfaces.ISceneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -28,11 +33,17 @@ public class SceneService implements ISceneService {
     private final HashSet<String> cachedScene = new HashSet<>();
 
     private SceneMapper sceneMapper;
+    private SceneDataConverter sceneDataConverter;
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     public void setSceneMapper(SceneMapper sceneMapper) {
         this.sceneMapper = sceneMapper;
+    }
+
+    @Autowired
+    public void setSceneDataConverter(SceneDataConverter sceneDataConverter) {
+        this.sceneDataConverter = sceneDataConverter;
     }
 
     @Autowired
@@ -55,20 +66,42 @@ public class SceneService implements ISceneService {
      * cache active scene from database into redis when project load
      */
     @Override
+    @PostConstruct
     public void cacheActiveScene() {
         QueryWrapper<SceneDAO> sceneWrapper = new QueryWrapper<>();
         sceneWrapper.eq("active", true);
-        List<SceneDAO> sceneDAOS = sceneMapper.selectList(sceneWrapper);
+        List<SceneDAO> sceneDAOList = sceneMapper.selectList(sceneWrapper);
 
-        if (sceneDAOS.isEmpty()) {
+        if (sceneDAOList.isEmpty()) {
             System.out.println("NO ACTIVE SCENE.");
+            return;
+        } else {
+            System.out.println("Redis cached active scene, number: " + sceneDAOList.size());
         }
 
-        for (SceneDAO sceneDAO : sceneDAOS) {
-            String key = RedisKeyPrefix.ACTIVE_SCENE.getKeyPrefix() + sceneDAO.getUuid();
-            redisTemplate.opsForValue().set(key, sceneDAO);
-            cachedScene.add(sceneDAO.getUuid());
+        for (SceneDAO sceneDAO : sceneDAOList) {
+            cacheScene(sceneDAO);
         }
+    }
+
+    /**
+     * get all scene cache in redis
+     *
+     * @return List
+     */
+    @Override
+    public List<ISceneBO> getCacheScene() {
+        List<ISceneBO> sceneBOList = new ArrayList<>();
+
+        for (String uuid : cachedScene) {
+            String key = RedisKeyPrefix.ACTIVE_SCENE.getKeyPrefix() + uuid;
+            SceneDAO sceneDAO = (SceneDAO) redisTemplate.opsForValue().get(key);
+
+            ISceneBO sceneBO = sceneDataConverter.constructSceneBO(sceneDAO);
+            sceneBOList.add(sceneBO);
+        }
+
+        return sceneBOList;
     }
 
     /**
@@ -77,10 +110,9 @@ public class SceneService implements ISceneService {
      * update db ==> update redis
      *
      * @param uuid   String
-     * @param active Boolean
      */
     @Override
-    public void toggleActive(String uuid, Boolean active) {
+    public void toggleActive(String uuid) {
         // get scene from db
         SceneDAO sceneDAO = getSceneById(uuid);
         if (sceneDAO == null) {
@@ -106,5 +138,34 @@ public class SceneService implements ISceneService {
             redisTemplate.opsForValue().set(key, sceneDAO);
             cachedScene.add(uuid);
         }
+    }
+
+    /**
+     * add scene to db, cache into redis
+     *
+     * @param sceneAddParam SceneAddParam
+     */
+    @Override
+    public void addScene(SceneAddParam sceneAddParam) {
+        ISceneBO sceneBO = sceneDataConverter.constructSceneBO(sceneAddParam);
+
+        int res = sceneMapper.insert(sceneBO.getSceneDAO());
+        if (res != 1) {
+            Asserts.fail(ResultCode.FAILED);
+        }
+
+        cacheScene(sceneBO.getSceneDAO());
+    }
+
+    /**
+     * cache sceneDAO into redis
+     *
+     * @param sceneDAO SceneDAO
+     */
+    @Override
+    public void cacheScene(SceneDAO sceneDAO) {
+        String key = RedisKeyPrefix.ACTIVE_SCENE.getKeyPrefix() + sceneDAO.getUuid();
+        redisTemplate.opsForValue().set(key, sceneDAO);
+        cachedScene.add(sceneDAO.getUuid());
     }
 }

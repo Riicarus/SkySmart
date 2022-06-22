@@ -1,5 +1,6 @@
 package com.skyline.skysmart.device.control;
 
+import com.alibaba.fastjson.JSONObject;
 import com.skyline.skysmart.core.enums.RedisKeyPrefix;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
@@ -89,7 +90,7 @@ public class DeviceControlCenter {
      */
     private void sendRequest(DeviceControlRequest deviceControlRequest) {
         // todo push request into Kafka
-        System.out.println(deviceControlRequest.toString());
+        System.out.println(JSONObject.toJSONString(deviceControlRequest));
     }
 
     /**

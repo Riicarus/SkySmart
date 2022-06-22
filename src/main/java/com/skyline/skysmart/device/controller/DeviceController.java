@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2022/6/20 0:09
  * @since 1.0.0
  */
-@Api(tags = {"device request"})
+@Api(tags = {"DeviceController"})
 @RestController
 public class DeviceController {
 }

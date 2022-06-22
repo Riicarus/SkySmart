@@ -5,10 +5,12 @@ import com.skyline.skysmart.device.data.bo.impls.DeviceUserRelationBO;
 import com.skyline.skysmart.device.data.bo.interfaces.IDeviceUserRelationBO;
 import com.skyline.skysmart.device.data.bo.interfaces.IPresetBO;
 import com.skyline.skysmart.device.data.dao.DeviceUserRelationDAO;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -42,9 +44,9 @@ public class DeviceUserRelationDataConverter {
         deviceUserRelationBO.mapDeviceUserRelationDAO(deviceUserRelationDAO);
         deviceUserRelationBO.setDeviceInfo(deviceBO);
 
-        HashMap<String, HashMap<String, String>> presetMap = new HashMap<>();
+        HashMap<String, Queue<InstructionUnit>> presetMap = new HashMap<>();
         for (IPresetBO presetBO : presetBOList) {
-            presetMap.put(presetBO.getPresetName(), presetBO.getProperties());
+            presetMap.put(presetBO.getPresetName(), presetBO.getInstructionUnitQueue());
         }
         deviceUserRelationBO.setDevicePreset(presetMap);
 

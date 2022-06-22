@@ -1,6 +1,11 @@
 package com.skyline.skysmart.device.service.interfaces;
 
+import com.skyline.skysmart.device.data.bo.impls.SceneBO;
+import com.skyline.skysmart.device.data.bo.interfaces.ISceneBO;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
+import com.skyline.skysmart.device.data.dto.SceneAddParam;
+
+import java.util.List;
 
 /**
  * [FEATURE INFO]<br/>
@@ -26,11 +31,31 @@ public interface ISceneService {
     void cacheActiveScene();
 
     /**
+     * get all scene cache in redis
+     *
+     * @return List
+     */
+    List<ISceneBO> getCacheScene();
+
+    /**
      * toggle whether scene is active
      *
      * @param uuid String
-     * @param active Boolean
      */
-    void toggleActive(String uuid, Boolean active);
+    void toggleActive(String uuid);
+
+    /**
+     * add scene to db
+     *
+     * @param sceneAddParam SceneAddParam
+     */
+    void addScene(SceneAddParam sceneAddParam);
+
+    /**
+     * cache sceneDAO into redis
+     *
+     * @param sceneDAO SceneDAO
+     */
+    void cacheScene(SceneDAO sceneDAO);
 
 }

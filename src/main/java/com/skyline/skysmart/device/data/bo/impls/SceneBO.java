@@ -7,7 +7,7 @@ import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.bo.interfaces.ISceneBO;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
 
-import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -20,7 +20,8 @@ import java.util.HashMap;
 public class SceneBO implements ISceneBO {
 
     private SceneDAO sceneDAO;
-    private HashMap<String, String> instructionsMap;
+    // instruction queue
+    private Queue<String> instructionQueue;
 
     /**
      * set scene dao
@@ -50,7 +51,7 @@ public class SceneBO implements ISceneBO {
      */
     @Override
     public void mapInstructions(String instructionsJson) {
-        this.instructionsMap = JSONObject.parseObject(instructionsJson, new TypeReference<HashMap<String, String>>(){});
+        this.instructionQueue = JSONObject.parseObject(instructionsJson, new TypeReference<Queue<String>>(){});
     }
 
     /**
@@ -59,32 +60,32 @@ public class SceneBO implements ISceneBO {
      * @param instructionsJson String, Json type
      */
     @Override
-    public void setInstructions(String instructionsJson) {
+    public void setInstructionsJson(String instructionsJson) {
         assertSceneNotEmpty();
         this.sceneDAO.setInstructionsJson(instructionsJson);
     }
 
     /**
-     * set instructions of SceneDAO in HashMap type
+     * set instructions of SceneDAO in LinkedHashMap type
      *
-     * @param instructionsMap HashMap
+     * @param instructionQueue Queue, instruction queue
      */
     @Override
-    public void setInstructions(HashMap<String, String> instructionsMap) {
+    public void setInstructionsJson(Queue<String> instructionQueue) {
         assertSceneNotEmpty();
-        String instructionsJson = new org.json.JSONObject(instructionsMap).toString();
+        String instructionsJson = JSONObject.toJSONString(instructionQueue);
         this.sceneDAO.setInstructionsJson(instructionsJson);
     }
 
     /**
-     * get instructions map of SceneBO
+     * get instruction queue of SceneBO
      *
-     * @return HashMap
+     * @return Queue
      */
     @Override
-    public HashMap<String, String> getInstructions() {
-        assertInstructionsMapNotEmpty();
-        return this.instructionsMap;
+    public Queue<String> getInstructionQueue() {
+        assertInstructionQueueNotEmpty();
+        return this.instructionQueue;
     }
 
     /**
@@ -145,8 +146,8 @@ public class SceneBO implements ISceneBO {
      * assert instructions map not empty
      */
     @Override
-    public void assertInstructionsMapNotEmpty() {
-        if (this.instructionsMap == null || this.instructionsMap.isEmpty()) {
+    public void assertInstructionQueueNotEmpty() {
+        if (this.instructionQueue == null || this.instructionQueue.isEmpty()) {
             Asserts.fail(ResultCode.NULL);
         }
     }

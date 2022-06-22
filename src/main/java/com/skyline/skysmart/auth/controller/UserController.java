@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.*;
  * @create 2022/6/12 17:14
  * @since 1.0.0
  */
+@Api(tags = {"UserController"})
 @RestController
-@Api
 public class UserController {
 
     private IUserService userService;
@@ -32,8 +32,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ApiOperation(value = "user login")
-    @PostMapping(value = "/user/login", produces = {"application/json"})
+    @ApiOperation("user login")
+    @PostMapping("/user/login")
     public ResponseResult<UserLoginDTO> login(
             @RequestParam("username") String username,
             @RequestParam("password") String password
@@ -46,8 +46,8 @@ public class UserController {
         return ResponseResult.success(userLoginDTO);
     }
 
-    @ApiOperation(value = "user login by email")
-    @PostMapping(value = "/user/login/email", produces = {"application/json"})
+    @ApiOperation("user login by email")
+    @PostMapping("/user/login/email")
     public ResponseResult<UserLoginDTO> loginByEmail(
             @RequestParam("email") String email,
             @RequestParam("verycode") String verycode
@@ -61,8 +61,8 @@ public class UserController {
         return ResponseResult.success(userLoginDTO);
     }
 
-    @ApiOperation(value = "user register")
-    @PostMapping(value = "/user", produces = {"application/json"})
+    @ApiOperation("user register")
+    @PostMapping("/user")
     public ResponseResult<String> register(
             @RequestBody UserAddParam userAddParam
     ) {
@@ -74,8 +74,8 @@ public class UserController {
         return ResponseResult.success("Register succeeded!");
     }
 
-    @ApiOperation(value = "user change password after login")
-    @PutMapping(value = "/user/password", produces = {"application/json"})
+    @ApiOperation("user change password after login")
+    @PutMapping("/user/password")
     public ResponseResult<String> changePassword(
             @RequestParam("uid") String uid,
             @RequestParam("password") String password
@@ -90,8 +90,8 @@ public class UserController {
         return ResponseResult.success("Change password succeeded!");
     }
 
-    @ApiOperation(value = "user change password before login")
-    @PutMapping(value = "/user/password/resection", produces = {"application/json"})
+    @ApiOperation("user change password before login")
+    @PutMapping("/user/password/resection")
     public ResponseResult<String> resetPassword(
             @RequestParam("uid") String uid,
             @RequestParam("verycode") String verycode,
@@ -105,8 +105,8 @@ public class UserController {
         return ResponseResult.success("Change password succeeded!");
     }
 
-    @ApiOperation(value = "change username by uid")
-    @PutMapping(value = "/user/username", produces = {"application/json"})
+    @ApiOperation("change username by uid")
+    @PutMapping("/user/username")
     public ResponseResult<String> changeUsername(
             @RequestParam("uid") String uid,
             @RequestParam("username") String username

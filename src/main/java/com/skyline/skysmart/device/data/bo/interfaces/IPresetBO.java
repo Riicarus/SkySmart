@@ -1,8 +1,10 @@
 package com.skyline.skysmart.device.data.bo.interfaces;
 
 import com.skyline.skysmart.device.data.dao.PresetDAO;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Queue;
 
 /**
  * [FEATURE INFO]<br/>
@@ -29,32 +31,40 @@ public interface IPresetBO {
     PresetDAO getPresetDAO();
 
     /**
-     * bind properties of preset
+     * bind instructionUnitQueue of preset
      *
-     * @param properties String
+     * @param instructionUnitJson String
      */
-    void mapProperties(String properties);
+    void mapInstructionUnitQueue(String instructionUnitJson);
+
+
+    /**
+     * bind instructionUnitQueue of preset
+     *
+     * @param instructionUnitQueue Queue
+     */
+    void mapInstructionUnitQueue(Queue<InstructionUnit> instructionUnitQueue);
+
+    /**
+     * set PresetDAO's instructionUnitQueue String
+     *
+     * @param instructionUnitJson String
+     */
+    void setInstructionUnitJson(String instructionUnitJson);
 
     /**
      * set PresetDAO's properties String
      *
-     * @param properties String
+     * @param instructionUnitQueue Queue
      */
-    void setProperties(String properties);
+    void setInstructionUnitJson(Queue<InstructionUnit> instructionUnitQueue);
 
     /**
-     * set PresetDAO's properties String
+     * get instructionUnitQueue of preset
      *
-     * @param propertiesMap HashMap
+     * @return Queue, instructionUnitQueue
      */
-    void setProperties(HashMap<String, String> propertiesMap);
-
-    /**
-     * get properties of preset
-     *
-     * @return HashMap
-     */
-    HashMap<String, String> getProperties();
+    Queue<InstructionUnit> getInstructionUnitQueue();
 
     /**
      * set preset name
@@ -78,5 +88,5 @@ public interface IPresetBO {
     /**
      * assert properties not empty
      */
-    void assertPropertiesNotEmpty();
+    void assertInstructionUnitQueueNotEmpty();
 }
