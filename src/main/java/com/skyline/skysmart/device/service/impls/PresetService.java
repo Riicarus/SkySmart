@@ -1,8 +1,6 @@
 package com.skyline.skysmart.device.service.impls;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.skyline.skysmart.core.enums.ResultCode;
-import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.bo.interfaces.IPresetBO;
 import com.skyline.skysmart.device.data.converter.PresetDataConverter;
 import com.skyline.skysmart.device.data.dao.PresetDAO;
@@ -53,7 +51,7 @@ public class PresetService implements IPresetService {
         List<PresetDAO> presetDAOList = presetMapper.selectList(presetWrapper);
 
         if (presetDAOList.size() == 0) {
-            Asserts.fail(ResultCode.NO_ELEMENT);
+            System.out.println("NO_DEFAULT_PRESET");
         }
 
         // cache presets to redis

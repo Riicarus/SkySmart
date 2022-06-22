@@ -1,5 +1,7 @@
 package com.skyline.skysmart.device.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.core.response.ResponseResult;
@@ -10,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 /**
  * [FEATURE INFO]<br/>
@@ -71,5 +75,21 @@ public class DeviceControlController {
         deviceControlService.turnOff(deviceId, time);
 
         return ResponseResult.success("Turn off device succeeded!");
+    }
+
+    @ApiOperation("handle multi instructions request")
+    @PostMapping(value = "/device/control/multi", produces = {"application/json"})
+    public ResponseResult<String> multiInstructions(
+            @RequestParam("deviceId") String deviceId,
+            @RequestParam("params") String paramsJson
+    ) {
+        if (!StringUtils.hasLength(deviceId) || !StringUtils.hasLength(paramsJson)) {
+            Asserts.fail(ResultCode.VALIDATE_FAILED);
+        }
+
+        HashMap<String, String> paramsMap = JSONObject.parseObject(paramsJson, new TypeReference<HashMap<String, String>>(){});
+        deviceControlService.handleMulti(deviceId, paramsMap);
+
+        return ResponseResult.success("Handle multi instructions succeeded!");
     }
 }

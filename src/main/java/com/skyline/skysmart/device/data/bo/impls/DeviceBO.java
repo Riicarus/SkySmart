@@ -23,7 +23,7 @@ public class DeviceBO implements IDeviceBO {
      * @param deviceDAO DeviceDAO
      */
     @Override
-    public void mapDevice(DeviceDAO deviceDAO) {
+    public void mapDeviceDAO(DeviceDAO deviceDAO) {
         this.deviceDAO = deviceDAO;
     }
 

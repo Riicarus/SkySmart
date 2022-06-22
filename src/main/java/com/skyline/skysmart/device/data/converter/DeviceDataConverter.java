@@ -32,7 +32,7 @@ public class DeviceDataConverter {
      */
     public IDeviceBO constructDeviceBO(DeviceDAO deviceDAO) {
         IDeviceBO deviceBO = new DeviceBO();
-        deviceBO.mapDevice(deviceDAO);
+        deviceBO.mapDeviceDAO(deviceDAO);
         return deviceBO;
     }
 

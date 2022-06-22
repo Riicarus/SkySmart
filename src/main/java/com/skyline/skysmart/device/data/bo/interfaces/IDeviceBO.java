@@ -17,7 +17,7 @@ public interface IDeviceBO {
      *
      * @param deviceDAO DeviceDAO
      */
-    void mapDevice(DeviceDAO deviceDAO);
+    void mapDeviceDAO(DeviceDAO deviceDAO);
 
     /**
      * Get DeviceBO's DeviceDAO

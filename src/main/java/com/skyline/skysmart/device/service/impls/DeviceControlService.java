@@ -70,4 +70,16 @@ public class DeviceControlService implements IDeviceControlService {
         String instruction = InstructionUtils.generate(deviceId, params);
         deviceControlCenter.doDispatch(instruction);
     }
+
+    /**
+     * handle multi instructions
+     *
+     * @param deviceId String
+     * @param params   HashMap, contains operations and their param
+     */
+    @Override
+    public void handleMulti(String deviceId, HashMap<String, String> params) {
+        String instruction = InstructionUtils.generate(deviceId, params);
+        deviceControlCenter.doDispatch(instruction);
+    }
 }

@@ -2,6 +2,8 @@ package com.skyline.skysmart.device.service.interfaces;
 
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
 
+import java.util.HashMap;
+
 /**
  * [FEATURE INFO]<br/>
  * device control service interface
@@ -34,5 +36,13 @@ public interface IDeviceControlService {
      * @param time Long, timestamp
      */
     void turnOff(String deviceId, Long time);
+
+    /**
+     * handle multi instructions
+     *
+     * @param deviceId String
+     * @param params HashMap, contains operations and their param
+     */
+    void handleMulti(String deviceId, HashMap<String, String> params);
 
 }
