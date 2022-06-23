@@ -2,8 +2,6 @@ package com.skyline.skysmart.device.data.converter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.skyline.skysmart.core.enums.ResultCode;
-import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.bo.impls.SceneBO;
 import com.skyline.skysmart.device.data.bo.interfaces.ISceneBO;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
@@ -73,6 +71,7 @@ public class SceneDataConverter {
         ISceneBO sceneBO = new SceneBO();
         sceneBO.mapperSceneDAO(sceneDAO);
         sceneBO.mapInstructions(sceneDAO.getInstructionsJson());
+        sceneBO.mapDeviceSet(sceneDAO.getInstructionsJson());
         return sceneBO;
     }
 

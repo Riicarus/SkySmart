@@ -87,4 +87,24 @@ public class DeviceControlService implements IDeviceControlService {
         String instruction = InstructionUtils.generate(deviceId, unitQueue);
         deviceControlCenter.doDispatch(instruction);
     }
+
+    /**
+     * dispatch instruction
+     *
+     * @param instruction String
+     */
+    @Override
+    public void dispatchInstruction(String instruction) {
+        deviceControlCenter.doDispatch(instruction);
+    }
+
+    /**
+     * dispatch instruction queue
+     *
+     * @param instructionQueue Queue
+     */
+    @Override
+    public void dispatchInstruction(Queue<String> instructionQueue) {
+        instructionQueue.forEach(deviceControlCenter::doDispatch);
+    }
 }

@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.skyline.skysmart.auth.service.interfaces.IUserService;
 import com.skyline.skysmart.device.control.DeviceControlCenter;
-import com.skyline.skysmart.device.data.dao.SceneDAO;
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
 import com.skyline.skysmart.device.data.dto.InstructionUnit;
 import com.skyline.skysmart.device.service.interfaces.ISceneService;
-import com.skyline.skysmart.device.util.InstructionUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -113,7 +111,7 @@ class SkySmartApplicationTests {
 
     @Test
     void testGetCacheSceneBO() {
-        System.out.println(sceneService.getCacheScene().get(0).getInstructionQueue());
+        // System.out.println(sceneService.getCacheScene().get(0).getInstructionQueue());
     }
 
 }

@@ -3,6 +3,7 @@ package com.skyline.skysmart.device.data.bo.interfaces;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
 
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * [FEATURE INFO]<br/>
@@ -38,7 +39,7 @@ public interface ISceneBO {
     /**
      * set instructions of SceneDAO in Json type
      *
-     * @param instructionsJson String, Json type
+     * @param instructionsJson String, Json type, raw type: Queue of String
      */
     void setInstructionsJson(String instructionsJson);
 
@@ -57,6 +58,20 @@ public interface ISceneBO {
     Queue<String> getInstructionQueue();
 
     /**
+     * bind device set of SceneBO
+     *
+     * @param instructionsJson String, Json type, raw type: Queue of String
+     */
+    void mapDeviceSet(String instructionsJson);
+
+    /**
+     * get device set
+     *
+     * @return Set of uuid
+     */
+    Set<String> getDeviceSet();
+
+    /**
      * get scene name
      *
      * @return String
@@ -69,6 +84,20 @@ public interface ISceneBO {
      * @param name String
      */
     void setName(String name);
+
+    /**
+     * get uuid
+     *
+     * @return String
+     */
+    String getUuid();
+
+    /**
+     * set uuid
+     *
+     * @param uuid String
+     */
+    void setUuid(String uuid);
 
     /**
      * get is scene active
@@ -93,4 +122,9 @@ public interface ISceneBO {
      * assert instructions map not empty
      */
     void assertInstructionQueueNotEmpty();
+
+    /**
+     * assert device set not empty
+     */
+    void assertDeviceSetNotEmpty();
 }

@@ -6,8 +6,11 @@ import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.bo.interfaces.ISceneBO;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
+import com.skyline.skysmart.device.util.InstructionUtils;
 
+import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * [FEATURE INFO]<br/>
@@ -22,6 +25,8 @@ public class SceneBO implements ISceneBO {
     private SceneDAO sceneDAO;
     // instruction queue
     private Queue<String> instructionQueue;
+    // device included in this scene
+    private Set<String> deviceSet;
 
     /**
      * set scene dao
@@ -89,6 +94,34 @@ public class SceneBO implements ISceneBO {
     }
 
     /**
+     * bind device set of SceneBO
+     *
+     * @param instructionsJson String, Json type, raw type: Queue of String
+     */
+    @Override
+    public void mapDeviceSet(String instructionsJson) {
+        HashSet<String> deviceIds = new HashSet<>();
+        Queue<String> instructionQueue = JSONObject.parseObject(instructionsJson, new TypeReference<Queue<String>>(){});
+
+        for (String instruction : instructionQueue) {
+            deviceIds.add(InstructionUtils.getDeviceId(instruction));
+        }
+
+        this.deviceSet = deviceIds;
+    }
+
+    /**
+     * get device set
+     *
+     * @return Set of uuid
+     */
+    @Override
+    public Set<String> getDeviceSet() {
+        assertDeviceSetNotEmpty();
+        return deviceSet;
+    }
+
+    /**
      * get scene name
      *
      * @return String
@@ -108,6 +141,28 @@ public class SceneBO implements ISceneBO {
     public void setName(String name) {
         assertSceneNotEmpty();
         this.sceneDAO.setName(name);
+    }
+
+    /**
+     * get uuid
+     *
+     * @return String
+     */
+    @Override
+    public String getUuid() {
+        assertSceneNotEmpty();
+        return this.sceneDAO.getUuid();
+    }
+
+    /**
+     * set uuid
+     *
+     * @param uuid String
+     */
+    @Override
+    public void setUuid(String uuid) {
+        assertSceneNotEmpty();
+        this.sceneDAO.setUuid(uuid);
     }
 
     /**
@@ -148,6 +203,16 @@ public class SceneBO implements ISceneBO {
     @Override
     public void assertInstructionQueueNotEmpty() {
         if (this.instructionQueue == null || this.instructionQueue.isEmpty()) {
+            Asserts.fail(ResultCode.NULL);
+        }
+    }
+
+    /**
+     * assert device set not empty
+     */
+    @Override
+    public void assertDeviceSetNotEmpty() {
+        if (this.deviceSet == null || this.deviceSet.isEmpty()) {
             Asserts.fail(ResultCode.NULL);
         }
     }

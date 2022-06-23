@@ -7,17 +7,18 @@ import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.bo.interfaces.ISceneBO;
 import com.skyline.skysmart.device.data.converter.SceneDataConverter;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
+import com.skyline.skysmart.device.data.dto.InstructionUnit;
 import com.skyline.skysmart.device.data.dto.SceneAddParam;
 import com.skyline.skysmart.device.mapper.SceneMapper;
+import com.skyline.skysmart.device.service.interfaces.IDeviceControlService;
 import com.skyline.skysmart.device.service.interfaces.ISceneService;
+import com.skyline.skysmart.device.util.InstructionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * [FEATURE INFO]<br/>
@@ -32,9 +33,16 @@ public class SceneService implements ISceneService {
 
     private final HashSet<String> cachedScene = new HashSet<>();
 
+    private IDeviceControlService deviceControlService;
+
     private SceneMapper sceneMapper;
     private SceneDataConverter sceneDataConverter;
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    public void setDeviceControlService(IDeviceControlService deviceControlService) {
+        this.deviceControlService = deviceControlService;
+    }
 
     @Autowired
     public void setSceneMapper(SceneMapper sceneMapper) {
@@ -63,7 +71,7 @@ public class SceneService implements ISceneService {
     }
 
     /**
-     * cache active scene from database into redis when project load
+     * cache active scene from database into redis and send control request to devices when project load
      */
     @Override
     @PostConstruct
@@ -80,7 +88,12 @@ public class SceneService implements ISceneService {
         }
 
         for (SceneDAO sceneDAO : sceneDAOList) {
+            // cache scene to redis
             cacheScene(sceneDAO);
+
+            // send device request
+            ISceneBO sceneBO = sceneDataConverter.constructSceneBO(sceneDAO);
+            sendActivateSceneRequest(sceneBO);
         }
     }
 
@@ -129,14 +142,19 @@ public class SceneService implements ISceneService {
 
         // is cached? to cache/remove in redis
         String key = RedisKeyPrefix.ACTIVE_SCENE.getKeyPrefix() + uuid;
+        ISceneBO sceneBO = sceneDataConverter.constructSceneBO(sceneDAO);
         if (cachedScene.contains(uuid)) {
             // remove
-            redisTemplate.delete(key);
-            cachedScene.remove(uuid);
+            removeScene(sceneDAO);
+
+            // send deactivate request
+            sendDeactivateSceneRequest(sceneBO);
         } else {
             // cache
-            redisTemplate.opsForValue().set(key, sceneDAO);
-            cachedScene.add(uuid);
+            cacheScene(sceneDAO);
+
+            // send activate request
+            sendActivateSceneRequest(sceneBO);
         }
     }
 
@@ -155,6 +173,9 @@ public class SceneService implements ISceneService {
         }
 
         cacheScene(sceneBO.getSceneDAO());
+
+        // send device request
+        sendActivateSceneRequest(sceneBO);
     }
 
     /**
@@ -167,5 +188,56 @@ public class SceneService implements ISceneService {
         String key = RedisKeyPrefix.ACTIVE_SCENE.getKeyPrefix() + sceneDAO.getUuid();
         redisTemplate.opsForValue().set(key, sceneDAO);
         cachedScene.add(sceneDAO.getUuid());
+    }
+
+    /**
+     * remove sceneDAO from redis
+     *
+     * @param sceneDAO SceneDAO
+     */
+    @Override
+    public void removeScene(SceneDAO sceneDAO) {
+        String key = RedisKeyPrefix.ACTIVE_SCENE.getKeyPrefix() + sceneDAO.getUuid();
+        redisTemplate.delete(key);
+        cachedScene.remove(sceneDAO.getUuid());
+    }
+
+    /**
+     * send device request of this scene
+     *
+     * @param sceneBO ISceneBO
+     */
+    @Override
+    public void sendActivateSceneRequest(ISceneBO sceneBO) {
+        Queue<String> instructionQueue = sceneBO.getInstructionQueue();
+
+        Queue<String> extendedInstructionQueue = new LinkedList<>();
+        for (String instruction : instructionQueue) {
+            instruction += "&ActivateScene=" + sceneBO.getUuid();
+            extendedInstructionQueue.add(instruction);
+        }
+        deviceControlService.dispatchInstruction(extendedInstructionQueue);
+    }
+
+    /**
+     * send deactivate device request of this scene
+     *
+     * @param sceneBO ISceneBO
+     */
+    @Override
+    public void sendDeactivateSceneRequest(ISceneBO sceneBO) {
+        Queue<InstructionUnit> unitQueue = new LinkedList<>();
+        List<String> params = new ArrayList<>();
+        params.add(sceneBO.getUuid());
+        unitQueue.add(new InstructionUnit("DeactivateScene", params));
+
+        Queue<String> instructionQueue = new LinkedList<>();
+        Set<String> deviceSet = sceneBO.getDeviceSet();
+        for (String deviceId : deviceSet) {
+            String instruction = InstructionUtils.generate(deviceId, unitQueue);
+            instructionQueue.add(instruction);
+        }
+
+        deviceControlService.dispatchInstruction(instructionQueue);
     }
 }

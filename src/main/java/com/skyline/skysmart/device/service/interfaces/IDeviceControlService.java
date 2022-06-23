@@ -3,7 +3,6 @@ package com.skyline.skysmart.device.service.interfaces;
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
 import com.skyline.skysmart.device.data.dto.InstructionUnit;
 
-import java.util.LinkedHashMap;
 import java.util.Queue;
 
 /**
@@ -46,5 +45,19 @@ public interface IDeviceControlService {
      * @param unitQueue Queue, queue of instruction units
      */
     void handleMulti(String deviceId, Queue<InstructionUnit> unitQueue);
+
+    /**
+     * dispatch instruction
+     *
+     * @param instruction String
+     */
+    void dispatchInstruction(String instruction);
+
+    /**
+     * dispatch instruction queue
+     *
+     * @param instructionQueue Queue
+     */
+    void dispatchInstruction(Queue<String> instructionQueue);
 
 }

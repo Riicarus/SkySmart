@@ -2,8 +2,6 @@ package com.skyline.skysmart.device.control;
 
 import com.alibaba.fastjson.JSONObject;
 import com.skyline.skysmart.core.enums.RedisKeyPrefix;
-import com.skyline.skysmart.core.enums.ResultCode;
-import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.data.dto.DeviceControlRequest;
 import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
 import com.skyline.skysmart.device.util.InstructionUtils;
@@ -59,7 +57,7 @@ public class DeviceControlCenter {
         HashMap<String, String> infoParams = (HashMap<String, String>) hashOperations.entries(key);
 
         if (infoParams.isEmpty()) {
-            Asserts.fail(ResultCode.NO_ELEMENT);
+            System.out.println("NO SUCH DEVICE_INTERNET_INFO IN LOADING STAGE, WAITING REGISTRATION.");
         }
 
         return new DeviceInternetInfo(deviceId, infoParams.get("IP"),

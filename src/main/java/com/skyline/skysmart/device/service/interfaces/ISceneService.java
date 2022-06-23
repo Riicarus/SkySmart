@@ -1,6 +1,5 @@
 package com.skyline.skysmart.device.service.interfaces;
 
-import com.skyline.skysmart.device.data.bo.impls.SceneBO;
 import com.skyline.skysmart.device.data.bo.interfaces.ISceneBO;
 import com.skyline.skysmart.device.data.dao.SceneDAO;
 import com.skyline.skysmart.device.data.dto.SceneAddParam;
@@ -57,5 +56,26 @@ public interface ISceneService {
      * @param sceneDAO SceneDAO
      */
     void cacheScene(SceneDAO sceneDAO);
+
+    /**
+     * remove sceneDAO from redis
+     *
+     * @param sceneDAO SceneDAO
+     */
+    void removeScene(SceneDAO sceneDAO);
+
+    /**
+     * send activate device request of this scene
+     *
+     * @param sceneBO ISceneBO
+     */
+    void sendActivateSceneRequest(ISceneBO sceneBO);
+
+    /**
+     * send deactivate device request of this scene
+     *
+     * @param sceneBO ISceneBO
+     */
+    void sendDeactivateSceneRequest(ISceneBO sceneBO);
 
 }
