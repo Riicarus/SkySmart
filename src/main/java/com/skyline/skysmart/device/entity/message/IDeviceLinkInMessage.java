@@ -1,4 +1,4 @@
-package com.skyline.skysmart.message.entity;
+package com.skyline.skysmart.device.entity.message;
 
 /**
  * [FEATURE INFO]<br/>

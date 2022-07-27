@@ -4,8 +4,9 @@ import com.skyline.skysmart.device.entity.bo.IDeviceBO;
 import com.skyline.skysmart.device.entity.bo.IUserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.bo.impl.UserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.dao.UserDeviceRelationDAO;
+import com.skyline.skysmart.device.entity.dto.DeviceUserInfoDTO;
 import com.skyline.skysmart.device.entity.vo.DeviceCachedInfo;
-import com.skyline.skysmart.message.entity.IDeviceRegisterMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceRegisterMessage;
 import com.skyline.skysmart.user.entity.bo.interfaces.IUserBO;
 import org.springframework.stereotype.Component;
 
@@ -49,8 +50,20 @@ public class UserDeviceRelationDataConverter {
         deviceCachedInfo.setCreateTime(userDeviceRelationBO.getDeviceBO().getCreateTime());
         deviceCachedInfo.setLastRegisterTime(deviceRegisterMessage.getRegisterTime());
         deviceCachedInfo.setPresets(userDeviceRelationBO.getPresets());
+        deviceCachedInfo.setCurrentPresetName(userDeviceRelationBO.getCurrentPresetName());
 
         return deviceCachedInfo;
+    }
+
+    public DeviceUserInfoDTO castToDeviceUserInfoDTO(IUserDeviceRelationBO userDeviceRelationBO) {
+        DeviceUserInfoDTO deviceUserInfoDTO = new DeviceUserInfoDTO();
+        deviceUserInfoDTO.setUid(userDeviceRelationBO.getUid());
+        deviceUserInfoDTO.setDeviceId(userDeviceRelationBO.getDeviceId());
+        deviceUserInfoDTO.setProductId(userDeviceRelationBO.getDeviceBO().getProductId());
+        deviceUserInfoDTO.setAliasName(userDeviceRelationBO.getAliasName());
+        deviceUserInfoDTO.setCurrentPresetName(userDeviceRelationBO.getCurrentPresetName());
+
+        return deviceUserInfoDTO;
     }
 
 }

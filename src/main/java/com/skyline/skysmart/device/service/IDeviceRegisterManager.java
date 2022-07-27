@@ -1,7 +1,7 @@
 package com.skyline.skysmart.device.service;
 
-import com.skyline.skysmart.message.entity.IDeviceRegisterMessage;
-import com.skyline.skysmart.message.entity.IDeviceUnregisterMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceRegisterMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceUnregisterMessage;
 
 /**
  * [FEATURE INFO]<br/>

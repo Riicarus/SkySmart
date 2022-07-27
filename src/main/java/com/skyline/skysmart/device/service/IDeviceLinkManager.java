@@ -1,7 +1,7 @@
 package com.skyline.skysmart.device.service;
 
-import com.skyline.skysmart.message.entity.IDeviceLinkInMessage;
-import com.skyline.skysmart.message.entity.IDeviceUnlinkMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceLinkInMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceUnlinkMessage;
 
 /**
  * [FEATURE INFO]<br/>

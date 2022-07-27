@@ -1,30 +1,31 @@
-package com.skyline.skysmart.message.entity.impl;
+package com.skyline.skysmart.device.entity.message.impl;
 
-import com.skyline.skysmart.message.entity.IDeviceLinkInMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceRegisterMessage;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  * [FEATURE INFO]<br/>
- * device link in message
+ * device register message
  *
  * @author Skyline
- * @create 2022/7/26 21:15
+ * @create 2022/7/26 21:20
  * @since 1.0.0
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-public class DeviceLinkInMessage implements IDeviceLinkInMessage {
+public class DeviceRegisterMessage implements IDeviceRegisterMessage {
 
     private String deviceId;
-    private String productId;
     private String deviceName;
+    private String productId;
     private String ip;
     private String mac;
     private String authToken;
-    private Long linkInTime;
+    private Long registerTime;
+    private String currentPresetName;
 
     @Override
     public String getDeviceId() {
@@ -32,13 +33,13 @@ public class DeviceLinkInMessage implements IDeviceLinkInMessage {
     }
 
     @Override
-    public String getProductId() {
-        return productId;
+    public String getDeviceName() {
+        return deviceName;
     }
 
     @Override
-    public String getDeviceName() {
-        return deviceName;
+    public String getProductId() {
+        return productId;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class DeviceLinkInMessage implements IDeviceLinkInMessage {
     }
 
     @Override
-    public Long getLinkInTime() {
-        return linkInTime;
+    public Long getRegisterTime() {
+        return registerTime;
     }
 }

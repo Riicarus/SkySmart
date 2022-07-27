@@ -3,12 +3,14 @@ package com.skyline.skysmart.device.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.ApiException;
+import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.entity.bo.IDeviceBO;
 import com.skyline.skysmart.device.entity.bo.IUserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.converter.DeviceDataConverter;
 import com.skyline.skysmart.device.entity.converter.ProductDataConverter;
 import com.skyline.skysmart.device.entity.converter.UserDeviceRelationDataConverter;
 import com.skyline.skysmart.device.entity.dao.UserDeviceRelationDAO;
+import com.skyline.skysmart.device.entity.dto.DeviceUserInfoDTO;
 import com.skyline.skysmart.device.mapper.UserDeviceRelationMapper;
 import com.skyline.skysmart.device.service.IDeviceDBService;
 import com.skyline.skysmart.device.service.IUserDeviceRelationDBService;
@@ -16,6 +18,9 @@ import com.skyline.skysmart.user.entity.bo.interfaces.IUserBO;
 import com.skyline.skysmart.user.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * [FEATURE INFO]<br/>
@@ -67,7 +72,6 @@ public class UserDeviceRelationDBService implements IUserDeviceRelationDBService
         this.userDeviceRelationDataConverter = userDeviceRelationDataConverter;
     }
 
-
     @Override
     public IUserDeviceRelationBO getRelationBO(String relationId) {
         UserDeviceRelationDAO userDeviceRelationDAO = getRelationDAO(relationId);
@@ -97,5 +101,25 @@ public class UserDeviceRelationDBService implements IUserDeviceRelationDBService
         }
 
         return getRelationBO(relationDAO.getId());
+    }
+
+    @Override
+    public ArrayList<DeviceUserInfoDTO> listDeviceUserInfoDTO(String uid) {
+        ArrayList<DeviceUserInfoDTO> infoList = new ArrayList<>();
+
+        QueryWrapper<UserDeviceRelationDAO> relationWrapper = new QueryWrapper<>();
+        relationWrapper.eq("uid", uid);
+
+        List<UserDeviceRelationDAO> userDeviceRelationDAOList = userDeviceRelationMapper.selectList(relationWrapper);
+        if (userDeviceRelationDAOList.isEmpty()) {
+            Asserts.fail(ResultCode.NO_ELEMENT);
+        }
+
+        ArrayList<IUserDeviceRelationBO> userDeviceRelationBOList = new ArrayList<>();
+        userDeviceRelationDAOList.forEach(relationDAO -> userDeviceRelationBOList.add(getRelationBO(relationDAO.getId())));
+
+        userDeviceRelationBOList.forEach(relationBO -> infoList.add(userDeviceRelationDataConverter.castToDeviceUserInfoDTO(relationBO)));
+
+        return infoList;
     }
 }

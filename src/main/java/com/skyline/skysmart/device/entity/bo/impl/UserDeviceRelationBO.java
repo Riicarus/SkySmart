@@ -140,6 +140,18 @@ public class UserDeviceRelationBO implements IUserDeviceRelationBO {
     }
 
     @Override
+    public void setCurrentPresetName(String presetName) {
+        assertRelationDAONotNull();
+        this.userDeviceRelationDAO.setCurrentPresetName(presetName);
+    }
+
+    @Override
+    public String getCurrentPresetName() {
+        assertRelationDAONotNull();
+        return this.userDeviceRelationDAO.getCurrentPresetName();
+    }
+
+    @Override
     public void assertRelationDAONotNull() {
         if (this.userDeviceRelationDAO == null) {
             throw new ApiException(ResultCode.NULL);

@@ -53,6 +53,10 @@ public interface IUserDeviceRelationBO {
 
     ArrayList<IProperty> getPreset(String name);
 
+    void setCurrentPresetName(String presetName);
+
+    String getCurrentPresetName();
+
     void assertRelationDAONotNull();
 
     void assertUserBONotNull();

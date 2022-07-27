@@ -49,4 +49,6 @@ public class DeviceCachedInfo {
 
     private HashMap<String, ArrayList<IProperty>> presets;
 
+    private String currentPresetName;
+
 }

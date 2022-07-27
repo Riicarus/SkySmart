@@ -38,4 +38,7 @@ public class UserDeviceRelationDAO {
     @TableField("presets")
     private String presets;
 
+    @TableField("current_preset_name")
+    private String currentPresetName;
+
 }

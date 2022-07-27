@@ -1,6 +1,6 @@
-package com.skyline.skysmart.message.entity.impl;
+package com.skyline.skysmart.device.entity.message.impl;
 
-import com.skyline.skysmart.message.entity.IDeviceUnregisterMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceUnregisterMessage;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

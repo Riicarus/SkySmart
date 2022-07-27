@@ -2,8 +2,8 @@ package com.skyline.skysmart.device.controller;
 
 import com.skyline.skysmart.core.response.ResponseResult;
 import com.skyline.skysmart.device.service.IDeviceRegisterManager;
-import com.skyline.skysmart.message.entity.impl.DeviceRegisterMessage;
-import com.skyline.skysmart.message.entity.impl.DeviceUnregisterMessage;
+import com.skyline.skysmart.device.entity.message.impl.DeviceRegisterMessage;
+import com.skyline.skysmart.device.entity.message.impl.DeviceUnregisterMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

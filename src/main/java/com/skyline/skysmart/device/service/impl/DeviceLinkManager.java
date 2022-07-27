@@ -1,11 +1,9 @@
 package com.skyline.skysmart.device.service.impl;
 
 import com.skyline.skysmart.device.service.IDeviceLinkManager;
-import com.skyline.skysmart.log.ILogManager;
-import com.skyline.skysmart.message.entity.IDeviceLinkInMessage;
-import com.skyline.skysmart.message.entity.IDeviceUnlinkMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceLinkInMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceUnlinkMessage;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,17 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeviceLinkManager implements IDeviceLinkManager {
 
-    private ILogManager logManager;
-
-    @Autowired
-    public void setLogManager(ILogManager logManager) {
-        this.logManager = logManager;
-    }
-
     /**
      * manage device link in request, auth device and log some info here through IDeviceMessageManager<br/>
      * 1. auth device <br/>
-     * 2. log message <br/>
      *
      * @param deviceLinkInMessage IDeviceLinkInMessage
      * @return boolean, is linked in
@@ -40,14 +30,7 @@ public class DeviceLinkManager implements IDeviceLinkManager {
         String mac = deviceLinkInMessage.getMac();
         String authToken = deviceLinkInMessage.getAuthToken();
 
-        boolean isAllowed = authDevice(ip, mac, authToken);
-        if (!isAllowed) {
-            return false;
-        }
-
-        logManager.logInfo(deviceLinkInMessage);
-
-        return true;
+        return authDevice(ip, mac, authToken);
     }
 
     /**
@@ -68,7 +51,6 @@ public class DeviceLinkManager implements IDeviceLinkManager {
     /**
      * manage device unlink request <br/>
      * 1. auth device <br/>
-     * 2. log message <br/>
      *
      * @param deviceUnlinkMessage IDeviceUnlinkMessage
      */

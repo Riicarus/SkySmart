@@ -1,8 +1,4 @@
-package com.skyline.skysmart.message.entity;
-
-import com.skyline.skysmart.device.entity.model.IProperty;
-
-import java.util.ArrayList;
+package com.skyline.skysmart.device.entity.message;
 
 /**
  * [FEATURE INFO]<br/>
@@ -25,8 +21,6 @@ public interface IDeviceRegisterMessage {
     String getMac();
 
     String getAuthToken();
-
-    ArrayList<IProperty> getProperties();
 
     Long getRegisterTime();
 

@@ -7,9 +7,8 @@ import com.skyline.skysmart.device.entity.vo.DeviceCachedInfo;
 import com.skyline.skysmart.device.service.IDeviceDBService;
 import com.skyline.skysmart.device.service.IDeviceRegisterManager;
 import com.skyline.skysmart.device.service.IUserDeviceRelationDBService;
-import com.skyline.skysmart.log.ILogManager;
-import com.skyline.skysmart.message.entity.IDeviceRegisterMessage;
-import com.skyline.skysmart.message.entity.IDeviceUnregisterMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceRegisterMessage;
+import com.skyline.skysmart.device.entity.message.IDeviceUnregisterMessage;
 import com.skyline.skysmart.user.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,8 +30,6 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
     private IUserDeviceRelationDBService userDeviceRelationDBService;
 
     private UserDeviceRelationDataConverter userDeviceRelationDataConverter;
-
-    private ILogManager logManager;
 
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -57,11 +54,6 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
     }
 
     @Autowired
-    public void setLogManager(ILogManager logManager) {
-        this.logManager = logManager;
-    }
-
-    @Autowired
     public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
@@ -71,7 +63,6 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
      * 1. get related device info, status, config and others <br/>
      * 2. cache device info to redis <br/>
      * 3. update device info in db <br/>
-     * 4. log info <br/>
      *
      * @param deviceRegisterMessage IDeviceRegisterMessage
      */
@@ -85,14 +76,11 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
         redisTemplate.opsForHash().put(RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix(), key, deviceCachedInfo);
 
         deviceDBService.updateLastRegisterTime(deviceId, deviceRegisterMessage.getRegisterTime());
-
-        logManager.logInfo(deviceCachedInfo);
     }
 
     /**
      * unregister device <br/>
      * 1. remove device info from redis <br/>
-     * 2. log info <br/>
      *
      * @param deviceUnregisterMessage IDeviceUnregisterMessage
      */
@@ -102,7 +90,5 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
 
         String key = RedisKeyPrefix.DEVICE_REGISTER_INFO_HASH_KEY.getKeyPrefix() + deviceId;
         redisTemplate.opsForHash().delete(RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix(), key);
-
-        logManager.logInfo(key);
     }
 }

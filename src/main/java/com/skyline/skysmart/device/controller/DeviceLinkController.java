@@ -3,7 +3,7 @@ package com.skyline.skysmart.device.controller;
 import com.skyline.skysmart.core.response.ResponseResult;
 import com.skyline.skysmart.device.service.IDeviceLinkManager;
 import com.skyline.skysmart.device.service.IDeviceRegisterManager;
-import com.skyline.skysmart.message.entity.impl.DeviceLinkInMessage;
+import com.skyline.skysmart.device.entity.message.impl.DeviceLinkInMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
