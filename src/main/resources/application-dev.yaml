@@ -43,7 +43,6 @@ spring:
 # mybatis-plus配置
 mybatis-plus:
   # entity别名
-  type-aliases-package: com.chongjun.po
   # 开启sql日志
   #configuration:
   #  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.skyline.skysmart.auth.mapper", "com.skyline.skysmart.device.mapper"})
+@MapperScan(basePackages = {"com.skyline.skysmart.user.mapper", "com.skyline.skysmart.device.mapper"})
 public class SkySmartApplication {
 
     public static void main(String[] args) {

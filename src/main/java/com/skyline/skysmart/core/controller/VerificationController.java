@@ -1,6 +1,6 @@
 package com.skyline.skysmart.core.controller;
 
-import com.skyline.skysmart.auth.shiro.AssertPermission;
+import com.skyline.skysmart.user.shiro.AssertPermission;
 import com.skyline.skysmart.core.enums.RedisKeyPrefix;
 import com.skyline.skysmart.core.response.ResponseResult;
 import com.skyline.skysmart.core.service.interfaces.IMailService;

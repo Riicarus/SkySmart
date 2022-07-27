@@ -36,7 +36,7 @@ public class Swagger2Config {
         return new ApiInfoBuilder()
                 .title("SkySmart API DOC")
                 .description("")
-                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html#/")
+                .termsOfServiceUrl("http://localhost:9000/swagger-ui.html#/")
                 .version("1.0")
                 .build();
     }

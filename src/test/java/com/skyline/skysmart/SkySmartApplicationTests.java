@@ -1,12 +1,14 @@
 package com.skyline.skysmart;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.skyline.skysmart.auth.service.interfaces.IUserService;
-import com.skyline.skysmart.device.control.DeviceControlCenter;
-import com.skyline.skysmart.device.data.dto.DeviceInternetInfo;
-import com.skyline.skysmart.device.data.dto.InstructionUnit;
-import com.skyline.skysmart.device.service.interfaces.ISceneService;
+import com.skyline.skysmart.device.entity.model.CommonProperty;
+import com.skyline.skysmart.device.entity.model.CommonValueType;
+import com.skyline.skysmart.device.entity.model.IProperty;
+import com.skyline.skysmart.device.entity.model.IValueType;
+import com.skyline.skysmart.user.service.interfaces.IUserService;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,22 +19,10 @@ import java.util.*;
 class SkySmartApplicationTests {
 
     private IUserService userService;
-    private ISceneService sceneService;
-    private DeviceControlCenter deviceControlCenter;
 
     @Autowired
     public void setUserService(IUserService userService) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setSceneService(ISceneService sceneService) {
-        this.sceneService = sceneService;
-    }
-
-    @Autowired
-    public void setDeviceControlCenter(DeviceControlCenter deviceControlCenter) {
-        this.deviceControlCenter = deviceControlCenter;
     }
 
     @Test
@@ -54,64 +44,24 @@ class SkySmartApplicationTests {
     }
 
     @Test
-    void testDeviceControlCenter() {
-        DeviceInternetInfo info = new DeviceInternetInfo("123456789", "136.20.116.49", "9010", "skengj4634624xkfalg");
-        deviceControlCenter.register(info);
-        DeviceInternetInfo info_1 = deviceControlCenter.getDeviceInternetInfo("123456789");
-        System.out.println(info);
-        System.out.println(info_1.toString());
+    void testMd5Hash() {
+        Md5Hash md5Hash = new Md5Hash("192.168.1.1", "00:0A:02:0B:03:0C", 1024);
+        System.out.println(md5Hash);
     }
 
     @Test
-    void testQueueJson() {
-        Queue<InstructionUnit> queue = new LinkedList<>();
-        List<String> param_1 = new ArrayList<>();
-        param_1.add("Wednesday");
-        param_1.add("12345");
-        queue.add(new InstructionUnit("on", param_1));
-        List<String> param_2 = new ArrayList<>();
-        param_2.add("Friday");
-        param_2.add("123");
-        queue.add(new InstructionUnit("off", param_2));
-        System.out.println(JSONObject.toJSONString(queue));
-    }
+    void testProperty() {
+        IProperty property = new CommonProperty();
+        property.setId("cpu_usage");
+        property.setName("cpu now time usage");
+        IValueType valueType = new CommonValueType();
+        valueType.setType("double");
+        valueType.setMaxValue("100");
+        valueType.setMinValue("0");
+        valueType.setUnit("percent");
+        property.setValueType(valueType);
 
-    @Test
-    void testSceneDAOJson() {
-        HashMap<String, Queue<InstructionUnit>> rawDeviceInstructionMap = new HashMap<>();
-
-        Queue<InstructionUnit> queue_1 = new LinkedList<>();
-        List<String> param_1 = new ArrayList<>();
-        param_1.add("Wednesday");
-        param_1.add("12345");
-        queue_1.add(new InstructionUnit("on", param_1));
-        List<String> param_2 = new ArrayList<>();
-        param_2.add("Friday");
-        param_2.add("123");
-        queue_1.add(new InstructionUnit("off", param_2));
-
-        Queue<InstructionUnit> queue_2 = new LinkedList<>();
-        List<String> param_3 = new ArrayList<>();
-        param_3.add("Wednesday");
-        param_3.add("12345");
-        queue_2.add(new InstructionUnit("on", param_3));
-        List<String> param_4 = new ArrayList<>();
-        param_4.add("Friday");
-        param_4.add("123");
-        queue_2.add(new InstructionUnit("off", param_4));
-
-        rawDeviceInstructionMap.put("light_1", queue_1);
-        rawDeviceInstructionMap.put("light_2", queue_2);
-
-        //System.out.println(JSONObject.toJSONString(rawDeviceInstructionMap));
-
-        HashMap<String, Queue<InstructionUnit>> rawDeviceInstructionMap_1 = JSONObject.parseObject(JSONObject.toJSONString(rawDeviceInstructionMap), new TypeReference<HashMap<String, Queue<InstructionUnit>>>(){});
-        System.out.println(JSONObject.toJSONString(rawDeviceInstructionMap_1));
-    }
-
-    @Test
-    void testGetCacheSceneBO() {
-        // System.out.println(sceneService.getCacheScene().get(0).getInstructionQueue());
+        System.out.println(JSON.toJSONString(property));
     }
 
 }

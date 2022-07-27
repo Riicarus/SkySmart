@@ -1,0 +1,21 @@
+package com.skyline.skysmart.message.entity;
+
+/**
+ * [FEATURE INFO]<br/>
+ * device unregister message interface
+ *
+ * @author Skyline
+ * @create 2022/7/26 16:08
+ * @since 1.0.0
+ */
+public interface IDeviceUnregisterMessage {
+
+    String getDeviceId();
+
+    String getDeviceName();
+
+    Long getUnregisterTime();
+
+    String getAuthToken();
+
+}

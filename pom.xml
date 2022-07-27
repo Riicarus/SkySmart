@@ -30,6 +30,7 @@
         <fastjson.version>1.2.60</fastjson.version>
         <jwt.version>3.15.0</jwt.version>
         <spring.kafka.version>2.7.8</spring.kafka.version>
+        <spring.mqtt.version>5.5.14</spring.mqtt.version>
 
         <shiro.version>1.7.1</shiro.version>
 
@@ -103,6 +104,11 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
             <version>${spring.kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mqtt</artifactId>
+            <version>${spring.mqtt.version}</version>
         </dependency>
 
         <!-- =========================安全======================== -->
