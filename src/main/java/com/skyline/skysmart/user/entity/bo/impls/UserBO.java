@@ -81,6 +81,18 @@ public class UserBO implements IUserBO {
     }
 
     @Override
+    public Boolean isAdmin() {
+        assertUserNotEmpty();
+        return userDAO.getAdmin();
+    }
+
+    @Override
+    public void setAdmin(Boolean isAdmin) {
+        assertUserNotEmpty();
+        userDAO.setAdmin(isAdmin);
+    }
+
+    @Override
     public void assertUserNotEmpty() {
         if (userDAO == null) {
             Asserts.fail(ResultCode.NULL);

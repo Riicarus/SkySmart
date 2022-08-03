@@ -12,8 +12,6 @@ public interface IDeviceUnregisterMessage {
 
     String getDeviceId();
 
-    String getDeviceName();
-
     Long getUnregisterTime();
 
     String getAuthToken();

@@ -32,21 +32,21 @@ public class DeviceRegisterController {
 
     @PostMapping("/device/register")
     @ApiOperation("register device")
-    public ResponseResult<String> register(
+    public ResponseResult<Integer> register(
             @RequestBody DeviceRegisterMessage deviceRegisterMessage
     ) {
         deviceRegisterManager.register(deviceRegisterMessage);
 
-        return ResponseResult.success("Register Succeeded!");
+        return ResponseResult.success(1);
     }
 
     @PostMapping("/device/unregister")
     @ApiOperation("unregister device")
-    public ResponseResult<String> unregister(
+    public ResponseResult<Integer> unregister(
             @RequestBody DeviceUnregisterMessage deviceUnregisterMessage
     ) {
         deviceRegisterManager.unregister(deviceUnregisterMessage);
 
-        return ResponseResult.success("Unregister Succeeded!");
+        return ResponseResult.success(0);
     }
 }

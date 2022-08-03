@@ -81,7 +81,7 @@ public class UserDataConverter {
      * @param userAddParam UserAddParam
      * @return IUserBO
      */
-    public IUserBO castToIUserBO(UserAddParam userAddParam) {
+    public IUserBO castToIUserBO(UserAddParam userAddParam, Boolean isAdmin) {
         if (userAddParam == null) {
             Asserts.fail(ResultCode.NULL);
         }
@@ -91,6 +91,7 @@ public class UserDataConverter {
         userDAO.setUsername(userAddParam.getUsername());
         userDAO.setSalt(String.valueOf(System.currentTimeMillis()));
         userDAO.setEmail("");
+        userDAO.setAdmin(isAdmin);
 
         Md5Hash md5Hash = new Md5Hash(userAddParam.getPassword(), userDAO.getSalt(), 1024);
         String md5Password = md5Hash.toHex();

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * [FEATURE INFO]<br/>
  * device register manager
@@ -74,6 +76,7 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
         String key = RedisKeyPrefix.DEVICE_REGISTER_INFO_HASH_KEY.getKeyPrefix() + userDeviceRelationBO.getDeviceId();
         DeviceCachedInfo deviceCachedInfo = userDeviceRelationDataConverter.castToDeviceCachedInfo(userDeviceRelationBO, deviceRegisterMessage);
         redisTemplate.opsForHash().put(RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix(), key, deviceCachedInfo);
+        redisTemplate.expire(RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix(), 2, TimeUnit.MINUTES);
 
         deviceDBService.updateLastRegisterTime(deviceId, deviceRegisterMessage.getRegisterTime());
     }

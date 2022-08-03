@@ -1,8 +1,11 @@
 package com.skyline.skysmart.device.service.impl;
 
+import com.skyline.skysmart.core.enums.ResultCode;
+import com.skyline.skysmart.core.exception.Asserts;
 import com.skyline.skysmart.device.entity.bo.IProductBO;
 import com.skyline.skysmart.device.entity.converter.ProductDataConverter;
 import com.skyline.skysmart.device.entity.dao.ProductDAO;
+import com.skyline.skysmart.device.entity.dto.ProductAddParam;
 import com.skyline.skysmart.device.mapper.ProductMapper;
 import com.skyline.skysmart.device.service.IProductDBService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +44,14 @@ public class ProductDBService implements IProductDBService {
     @Override
     public IProductBO getProductBO(String productId) {
         return productDataConverter.castToProductBO(getProductDAO(productId));
+    }
+
+    @Override
+    public void addProduct(ProductAddParam productAddParam) {
+        ProductDAO productDAO = productDataConverter.castToProductDAO(productAddParam);
+
+        if (productMapper.insert(productDAO) != 1) {
+            Asserts.fail(ResultCode.FAILED);
+        }
     }
 }

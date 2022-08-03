@@ -74,6 +74,19 @@ public class UserController {
         return ResponseResult.success("Register succeeded!");
     }
 
+    @ApiOperation("user register")
+    @PostMapping("/user-admin")
+    public ResponseResult<String> registerAdmin(
+            @RequestBody UserAddParam userAddParam
+    ) {
+        if (userAddParam == null) {
+            Asserts.fail(ResultCode.VALIDATE_FAILED);
+        }
+
+        userService.registerAdmin(userAddParam);
+        return ResponseResult.success("Register succeeded!");
+    }
+
     @ApiOperation("user change password after login")
     @PutMapping("/user/password")
     public ResponseResult<String> changePassword(

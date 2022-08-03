@@ -4,7 +4,8 @@ import com.skyline.skysmart.device.entity.bo.IDeviceBO;
 import com.skyline.skysmart.device.entity.bo.IUserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.bo.impl.UserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.dao.UserDeviceRelationDAO;
-import com.skyline.skysmart.device.entity.dto.DeviceUserInfoDTO;
+import com.skyline.skysmart.device.entity.dto.UserDeviceDetailInfoDTO;
+import com.skyline.skysmart.device.entity.dto.UserDeviceInfoDTO;
 import com.skyline.skysmart.device.entity.vo.DeviceCachedInfo;
 import com.skyline.skysmart.device.entity.message.IDeviceRegisterMessage;
 import com.skyline.skysmart.user.entity.bo.interfaces.IUserBO;
@@ -55,15 +56,52 @@ public class UserDeviceRelationDataConverter {
         return deviceCachedInfo;
     }
 
-    public DeviceUserInfoDTO castToDeviceUserInfoDTO(IUserDeviceRelationBO userDeviceRelationBO) {
-        DeviceUserInfoDTO deviceUserInfoDTO = new DeviceUserInfoDTO();
-        deviceUserInfoDTO.setUid(userDeviceRelationBO.getUid());
-        deviceUserInfoDTO.setDeviceId(userDeviceRelationBO.getDeviceId());
-        deviceUserInfoDTO.setProductId(userDeviceRelationBO.getDeviceBO().getProductId());
-        deviceUserInfoDTO.setAliasName(userDeviceRelationBO.getAliasName());
-        deviceUserInfoDTO.setCurrentPresetName(userDeviceRelationBO.getCurrentPresetName());
+    public UserDeviceInfoDTO castToDeviceUserInfoDTO(IUserDeviceRelationBO userDeviceRelationBO) {
+        UserDeviceInfoDTO userDeviceInfoDTO = new UserDeviceInfoDTO();
+        userDeviceInfoDTO.setUid(userDeviceRelationBO.getUid());
+        userDeviceInfoDTO.setDeviceId(userDeviceRelationBO.getDeviceId());
+        userDeviceInfoDTO.setProductId(userDeviceRelationBO.getDeviceBO().getProductId());
+        userDeviceInfoDTO.setAliasName(userDeviceRelationBO.getAliasName());
+        userDeviceInfoDTO.setCurrentPresetName(userDeviceRelationBO.getCurrentPresetName());
 
-        return deviceUserInfoDTO;
+        return userDeviceInfoDTO;
+    }
+
+    public UserDeviceInfoDTO castToDeviceUserInfoDTO(DeviceCachedInfo deviceCachedInfo) {
+        UserDeviceInfoDTO userDeviceInfoDTO = new UserDeviceInfoDTO();
+        userDeviceInfoDTO.setUid(deviceCachedInfo.getUid());
+        userDeviceInfoDTO.setDeviceId(deviceCachedInfo.getDeviceId());
+        userDeviceInfoDTO.setProductId(deviceCachedInfo.getProductId());
+        userDeviceInfoDTO.setAliasName(deviceCachedInfo.getAliasName());
+        userDeviceInfoDTO.setCurrentPresetName(deviceCachedInfo.getCurrentPresetName());
+
+        return userDeviceInfoDTO;
+    }
+
+    public UserDeviceDetailInfoDTO castToDeviceUserDetailInfoDTO(IUserDeviceRelationBO userDeviceRelationBO, Boolean networkStatus) {
+        UserDeviceDetailInfoDTO userDeviceDetailInfoDTO = new UserDeviceDetailInfoDTO();
+        userDeviceDetailInfoDTO.setUid(userDeviceRelationBO.getUid());
+        userDeviceDetailInfoDTO.setDeviceId(userDeviceRelationBO.getDeviceId());
+        userDeviceDetailInfoDTO.setProductId(userDeviceRelationBO.getDeviceBO().getProductId());
+        userDeviceDetailInfoDTO.setAliasName(userDeviceRelationBO.getAliasName());
+        userDeviceDetailInfoDTO.setCurrentPresetName(userDeviceRelationBO.getCurrentPresetName());
+        userDeviceDetailInfoDTO.setPresets(userDeviceRelationBO.getPresets());
+        userDeviceDetailInfoDTO.setNetworkStatus(networkStatus);
+
+        return userDeviceDetailInfoDTO;
+    }
+
+    public UserDeviceDetailInfoDTO castToDeviceUserDetailInfoDTO(DeviceCachedInfo deviceCachedInfo, Boolean networkStatus) {
+        UserDeviceDetailInfoDTO userDeviceDetailInfoDTO = new UserDeviceDetailInfoDTO();
+        userDeviceDetailInfoDTO.setUid(deviceCachedInfo.getUid());
+        userDeviceDetailInfoDTO.setDeviceId(deviceCachedInfo.getDeviceId());
+        userDeviceDetailInfoDTO.setProductId(deviceCachedInfo.getProductId());
+        userDeviceDetailInfoDTO.setAliasName(deviceCachedInfo.getAliasName());
+        userDeviceDetailInfoDTO.setCurrentPresetName(deviceCachedInfo.getCurrentPresetName());
+        userDeviceDetailInfoDTO.setPresets(deviceCachedInfo.getPresets());
+        userDeviceDetailInfoDTO.setNetworkStatus(networkStatus);
+
+        return userDeviceDetailInfoDTO;
     }
 
 }

@@ -85,6 +85,11 @@ public class JwtRealm extends AuthorizingRealm {
         HashSet<String> stringPermissions = new HashSet<>();
         // permission of userDAO
         stringPermissions.add("userDAO:*:" + userDAO.getUid());
+        stringPermissions.add("device:*:" + userDAO.getUid());
+
+        if (userDAO.getAdmin()) {
+            stringPermissions.add("admin:*:*");
+        }
 
         info.addStringPermissions(stringPermissions);
         return info;

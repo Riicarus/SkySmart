@@ -128,7 +128,23 @@ public class UserService implements IUserService {
      */
     @Override
     public void register(UserAddParam userAddParam) {
-        IUserBO userBO = userDataConverter.castToIUserBO(userAddParam);
+        IUserBO userBO = userDataConverter.castToIUserBO(userAddParam, false);
+
+        int res = userMapper.insert(userBO.getUser());
+        if (res != 1) {
+            Asserts.fail(ResultCode.FAILED);
+        }
+    }
+
+
+    /**
+     * user-admin register
+     *
+     * @param userAddParam UserAddParam
+     */
+    @Override
+    public void registerAdmin(UserAddParam userAddParam) {
+        IUserBO userBO = userDataConverter.castToIUserBO(userAddParam, true);
 
         int res = userMapper.insert(userBO.getUser());
         if (res != 1) {

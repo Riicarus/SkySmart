@@ -19,18 +19,12 @@ import lombok.Setter;
 public class DeviceUnregisterMessage implements IDeviceUnregisterMessage {
 
     private String deviceId;
-    private String deviceName;
     private Long unregisterTime;
     private String authToken;
 
     @Override
     public String getDeviceId() {
         return deviceId;
-    }
-
-    @Override
-    public String getDeviceName() {
-        return deviceName;
     }
 
     @Override

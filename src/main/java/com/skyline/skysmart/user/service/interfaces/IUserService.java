@@ -52,6 +52,13 @@ public interface IUserService {
     void register(UserAddParam userAddParam);
 
     /**
+     * user-admin register
+     *
+     * @param userAddParam UserAddParam
+     */
+    void registerAdmin(UserAddParam userAddParam);
+
+    /**
      * change password with uid
      *
      * @param uid String

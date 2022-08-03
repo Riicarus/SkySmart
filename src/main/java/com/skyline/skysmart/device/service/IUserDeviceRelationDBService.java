@@ -2,7 +2,8 @@ package com.skyline.skysmart.device.service;
 
 import com.skyline.skysmart.device.entity.bo.IUserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.dao.UserDeviceRelationDAO;
-import com.skyline.skysmart.device.entity.dto.DeviceUserInfoDTO;
+import com.skyline.skysmart.device.entity.dto.UserDeviceDetailInfoDTO;
+import com.skyline.skysmart.device.entity.dto.UserDeviceInfoDTO;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,28 @@ public interface IUserDeviceRelationDBService {
 
     IUserDeviceRelationBO getRelationBOByDeviceId(String deviceId);
 
-    ArrayList<DeviceUserInfoDTO> listDeviceUserInfoDTO(String uid);
+    /**
+     * list all user's device
+     *
+     * @param uid String, uid
+     * @return ArrayList of UserDeviceInfoDTO
+     */
+    ArrayList<UserDeviceInfoDTO> listDeviceUserInfoDTO(String uid);
+
+    /**
+     * list all user's online device
+     *
+     * @param uid String, uid
+     * @return ArrayList of DeviceUserInfoSTO
+     */
+    ArrayList<UserDeviceInfoDTO> listOnlineDeviceUserInfoDTO(String uid);
+
+    /**
+     * get device user detail info dto
+     *
+     * @param deviceId String, deviceId
+     * @return UserDeviceDetailInfoDTO
+     */
+    UserDeviceDetailInfoDTO getDeviceUserDetailInfoDTO(String deviceId);
 
 }

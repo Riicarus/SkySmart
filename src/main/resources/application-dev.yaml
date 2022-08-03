@@ -4,6 +4,13 @@ server:
     uri-encoding: utf-8
 
 spring:
+  mqtt:
+    host: tcp://124.222.158.8:1883
+    clientId: mqtt_client_id_001
+    username: mosquitto
+    password: 314159.com
+    timeout: 30
+    keepalive: 30
   datasource:
     username: root
     password: 314159.com

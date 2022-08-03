@@ -6,25 +6,23 @@ import lombok.NoArgsConstructor;
 
 /**
  * [FEATURE INFO]<br/>
- * device info of user
+ * product add param
  *
  * @author Skyline
- * @create 2022/7/27 15:46
+ * @create 2022-8-3 12:01
  * @since 1.0.0
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeviceUserInfoDTO {
+public class ProductAddParam {
 
-    private String uid;
+    private String name;
 
-    private String deviceId;
+    private String type;
 
-    private String productId;
+    private Long producedTime;
 
-    private String aliasName;
-
-    private String currentPresetName;
+    private String defaultProperties;
 
 }

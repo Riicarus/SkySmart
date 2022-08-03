@@ -34,6 +34,10 @@ public interface IUserBO {
 
     String getSalt();
 
+    Boolean isAdmin();
+
+    void setAdmin(Boolean isAdmin);
+
     void assertUserNotEmpty();
 
 }

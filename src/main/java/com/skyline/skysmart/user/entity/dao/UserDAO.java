@@ -3,8 +3,6 @@ package com.skyline.skysmart.user.entity.dao;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,28 +18,25 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "com.skyline.skysmart.auth.data.dao.UserDAO", description = "user dao")
-@TableName(value = "user")
+@TableName("user")
 public class UserDAO {
 
-    @TableId(value = "uid")
-    @ApiModelProperty(value = "unique id of user")
+    @TableId("uid")
     private String uid;
 
-    @TableField(value = "username")
-    @ApiModelProperty(value = "username")
+    @TableField("username")
     private String username;
 
-    @TableField(value = "password")
-    @ApiModelProperty(value = "password")
+    @TableField("password")
     private String password;
 
-    @TableField(value = "email")
-    @ApiModelProperty(value = "email")
+    @TableField("email")
     private String email;
 
-    @TableField(value = "salt")
-    @ApiModelProperty(value = "encryption salt")
+    @TableField("salt")
     private String salt;
+
+    @TableField("admin")
+    private Boolean admin;
 
 }

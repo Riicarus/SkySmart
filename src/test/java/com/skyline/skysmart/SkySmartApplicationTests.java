@@ -45,7 +45,7 @@ class SkySmartApplicationTests {
 
     @Test
     void testMd5Hash() {
-        Md5Hash md5Hash = new Md5Hash("192.168.1.1", "00:0A:02:0B:03:0C", 1024);
+        Md5Hash md5Hash = new Md5Hash("skyline", "1655029107440", 1024);
         System.out.println(md5Hash);
     }
 
@@ -64,4 +64,9 @@ class SkySmartApplicationTests {
         System.out.println(JSON.toJSONString(property));
     }
 
+    @Test
+    void generateUuid() {
+        UUID uuid = UUID.randomUUID();
+        System.out.println(uuid);
+    }
 }
