@@ -7,7 +7,7 @@ import com.skyline.skysmart.device.entity.bo.IProductBO;
 import com.skyline.skysmart.device.entity.dao.DeviceDAO;
 import com.skyline.skysmart.device.entity.model.IProperty;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * [FEATURE INFO]<br/>
@@ -188,19 +188,19 @@ public class DeviceBO implements IDeviceBO {
     /**
      * device properties of now time
      *
-     * @return ArrayList, device properties
+     * @return HashMap, device properties
      */
     @Override
-    public ArrayList<IProperty> getProperties() {
+    public HashMap<String, IProperty> getPropertyMap() {
         assertProductBONotNull();
 
-        return this.productBO.getProperties();
+        return this.productBO.getPropertyMap();
     }
 
     @Override
-    public void setProperties(ArrayList<IProperty> properties) {
+    public void setProperty(IProperty property) {
         assertProductBONotNull();
 
-        this.productBO.setProperties(properties);
+        this.productBO.setProperty(property);
     }
 }

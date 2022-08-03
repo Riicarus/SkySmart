@@ -1,6 +1,5 @@
 package com.skyline.skysmart.device.entity.bo.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.skyline.skysmart.core.enums.ResultCode;
@@ -8,11 +7,13 @@ import com.skyline.skysmart.core.exception.ApiException;
 import com.skyline.skysmart.device.entity.bo.IDeviceBO;
 import com.skyline.skysmart.device.entity.bo.IUserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.dao.UserDeviceRelationDAO;
+import com.skyline.skysmart.device.entity.enums.PropertyType;
 import com.skyline.skysmart.device.entity.model.IProperty;
 import com.skyline.skysmart.user.entity.bo.interfaces.IUserBO;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * [FEATURE INFO]<br/>
@@ -112,37 +113,133 @@ public class UserDeviceRelationBO implements IUserDeviceRelationBO {
     }
 
     @Override
-    public void setPresets(HashMap<String, ArrayList<IProperty>> presets) {
+    public void setProperty(String name, IProperty property) {
         assertRelationDAONotNull();
-        this.userDeviceRelationDAO.setPresets(JSON.toJSONString(presets));
+
+        HashMap<String, IProperty> properties = getProperties();
+        properties.put(name, property);
+        this.userDeviceRelationDAO.setProperties(JSONObject.toJSONString(properties));
     }
 
     @Override
-    public void addPreset(String name, ArrayList<IProperty> preset) {
-        HashMap<String, ArrayList<IProperty>> presets = getPresets();
+    public void setProperty(String name, String value) {
+        IProperty property = getProperty(name);
+        if (property == null) {
+            throw new ApiException(ResultCode.NULL);
+        }
+
+        property.setValue(value);
+    }
+
+    /**
+     * must synchronize property when create this object or update preset or change preset
+     */
+    @Override
+    public void syncProperty() {
+        String currentPresetName = userDeviceRelationDAO.getCurrentPresetName();
+        HashMap<String, String> currentPreset = getPresets().get(currentPresetName);
+
+        currentPreset.forEach(this::setProperty);
+    }
+
+    @Override
+    public HashMap<String, IProperty> getProperties() {
+        assertRelationDAONotNull();
+
+        String properties = this.userDeviceRelationDAO.getProperties();
+        return JSONObject.parseObject(properties, new TypeReference<HashMap<String, IProperty>>(){});
+    }
+
+    @Override
+    public IProperty getProperty(String name) {
+        return getProperties().get(name);
+    }
+
+    @Override
+    public void setPreset(String name, HashMap<String, String> preset) {
+        // ensure the preset is only in the range of customizable properties
+        Set<String> customizablePropertyId = getCustomizablePropertyId();
+        for (Map.Entry<String, String> entry : preset.entrySet()) {
+            if (!customizablePropertyId.contains(entry.getKey())) {
+                preset.remove(entry.getKey());
+            }
+        }
+
+        HashMap<String, HashMap<String, String>> presets = getPresets();
         presets.put(name, preset);
+        this.userDeviceRelationDAO.setPresets(JSONObject.toJSONString(presets));
 
-        setPresets(presets);
+        // if change the current used preset, change the properties too
+        if (name.equals(userDeviceRelationDAO.getCurrentPresetName())) {
+            preset.forEach(this::setProperty);
+        }
     }
 
     @Override
-    public HashMap<String, ArrayList<IProperty>> getPresets() {
+    public HashMap<String, HashMap<String, String>> getPresets() {
         assertRelationDAONotNull();
 
         String json = this.userDeviceRelationDAO.getPresets();
 
-        return JSONObject.parseObject(json, new TypeReference<HashMap<String, ArrayList<IProperty>>>(){});
+        HashMap<String, HashMap<String, String>> presets =
+                JSONObject.parseObject(json, new TypeReference<HashMap<String, HashMap<String, String>>>() {});
+        presets.put("default", getDefaultPreset());
+        return presets;
     }
 
     @Override
-    public ArrayList<IProperty> getPreset(String name) {
+    public HashMap<String, String> getPreset(String name) {
         return getPresets().get(name);
     }
 
     @Override
+    public HashMap<String, String> getDefaultPreset() {
+        HashMap<String, String> defaultPreset = new HashMap<>();
+
+        HashMap<String, IProperty> defaultProperties = getDeviceBO().getPropertyMap();
+        for (Map.Entry<String, IProperty> entry : defaultProperties.entrySet()) {
+            if (entry.getValue().getPropertyType().equals(PropertyType.ALL)) {
+                defaultPreset.put(entry.getKey(), entry.getValue().getValue());
+            }
+        }
+
+        return defaultPreset;
+    }
+
+    @Override
+    public Set<String> getCustomizablePropertyId() {
+        return getDefaultPreset().keySet();
+    }
+
+    /**
+     * change the name of current preset
+     *
+     * @param presetName String, new name of current preset
+     */
+    @Override
     public void setCurrentPresetName(String presetName) {
         assertRelationDAONotNull();
+
+        String oldCurrentPresetName = getCurrentPresetName();
+        HashMap<String, HashMap<String, String>> presets = getPresets();
+        HashMap<String, String> currentPreset = presets.get(oldCurrentPresetName);
+        presets.remove(oldCurrentPresetName);
+        presets.put(presetName, currentPreset);
+
         this.userDeviceRelationDAO.setCurrentPresetName(presetName);
+    }
+
+    /**
+     * change current preset
+     *
+     * @param presetName String, other preset's name
+     */
+    @Override
+    public void changeCurrentPreset(String presetName) {
+        assertRelationDAONotNull();
+        this.userDeviceRelationDAO.setCurrentPresetName(presetName);
+
+        syncProperty();
     }
 
     @Override

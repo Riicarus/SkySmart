@@ -1,6 +1,6 @@
 package com.skyline.skysmart.device.entity.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * [FEATURE INFO]<br/>
@@ -53,9 +53,7 @@ public interface IProduct {
      *
      * @return ArrayList, default properties
      */
-    ArrayList<IProperty> getProperties();
+    HashMap<String, IProperty> getPropertyMap();
 
-    void setProperties(ArrayList<IProperty> properties);
-
-    void addProperty(IProperty property);
+    void setProperty(IProperty property);
 }

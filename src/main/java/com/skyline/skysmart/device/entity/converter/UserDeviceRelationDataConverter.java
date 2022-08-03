@@ -31,6 +31,7 @@ public class UserDeviceRelationDataConverter {
         userDeviceRelationBO.mapUserDeviceRelationDAO(userDeviceRelationDAO);
         userDeviceRelationBO.mapDeviceBO(deviceBO);
         userDeviceRelationBO.mapUserBO(userBO);
+        userDeviceRelationBO.syncProperty();
 
         return userDeviceRelationBO;
     }
@@ -52,6 +53,7 @@ public class UserDeviceRelationDataConverter {
         deviceCachedInfo.setLastRegisterTime(deviceRegisterMessage.getRegisterTime());
         deviceCachedInfo.setPresets(userDeviceRelationBO.getPresets());
         deviceCachedInfo.setCurrentPresetName(userDeviceRelationBO.getCurrentPresetName());
+        deviceCachedInfo.setProperties(userDeviceRelationBO.getProperties());
 
         return deviceCachedInfo;
     }
@@ -82,11 +84,17 @@ public class UserDeviceRelationDataConverter {
         UserDeviceDetailInfoDTO userDeviceDetailInfoDTO = new UserDeviceDetailInfoDTO();
         userDeviceDetailInfoDTO.setUid(userDeviceRelationBO.getUid());
         userDeviceDetailInfoDTO.setDeviceId(userDeviceRelationBO.getDeviceId());
-        userDeviceDetailInfoDTO.setProductId(userDeviceRelationBO.getDeviceBO().getProductId());
+        userDeviceDetailInfoDTO.setDeviceName(userDeviceRelationBO.getDeviceBO().getName());
         userDeviceDetailInfoDTO.setAliasName(userDeviceRelationBO.getAliasName());
+        userDeviceDetailInfoDTO.setProductId(userDeviceRelationBO.getDeviceBO().getProductId());
+        userDeviceDetailInfoDTO.setProductName(userDeviceRelationBO.getDeviceBO().getProductBO().getName());
+        userDeviceDetailInfoDTO.setProductType(userDeviceRelationBO.getDeviceBO().getProductBO().getType());
+        userDeviceDetailInfoDTO.setIp("offline");
+        userDeviceDetailInfoDTO.setMac("offline");
         userDeviceDetailInfoDTO.setCurrentPresetName(userDeviceRelationBO.getCurrentPresetName());
         userDeviceDetailInfoDTO.setPresets(userDeviceRelationBO.getPresets());
         userDeviceDetailInfoDTO.setNetworkStatus(networkStatus);
+        userDeviceDetailInfoDTO.setProperties(userDeviceRelationBO.getProperties());
 
         return userDeviceDetailInfoDTO;
     }
@@ -95,11 +103,17 @@ public class UserDeviceRelationDataConverter {
         UserDeviceDetailInfoDTO userDeviceDetailInfoDTO = new UserDeviceDetailInfoDTO();
         userDeviceDetailInfoDTO.setUid(deviceCachedInfo.getUid());
         userDeviceDetailInfoDTO.setDeviceId(deviceCachedInfo.getDeviceId());
-        userDeviceDetailInfoDTO.setProductId(deviceCachedInfo.getProductId());
+        userDeviceDetailInfoDTO.setDeviceName(deviceCachedInfo.getDeviceName());
         userDeviceDetailInfoDTO.setAliasName(deviceCachedInfo.getAliasName());
+        userDeviceDetailInfoDTO.setProductId(deviceCachedInfo.getProductId());
+        userDeviceDetailInfoDTO.setProductName(deviceCachedInfo.getProductName());
+        userDeviceDetailInfoDTO.setProductType(deviceCachedInfo.getProductType());
+        userDeviceDetailInfoDTO.setIp(deviceCachedInfo.getIp());
+        userDeviceDetailInfoDTO.setMac(deviceCachedInfo.getMac());
         userDeviceDetailInfoDTO.setCurrentPresetName(deviceCachedInfo.getCurrentPresetName());
         userDeviceDetailInfoDTO.setPresets(deviceCachedInfo.getPresets());
         userDeviceDetailInfoDTO.setNetworkStatus(networkStatus);
+        userDeviceDetailInfoDTO.setProperties(deviceCachedInfo.getProperties());
 
         return userDeviceDetailInfoDTO;
     }

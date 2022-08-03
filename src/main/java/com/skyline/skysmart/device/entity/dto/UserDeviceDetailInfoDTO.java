@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -25,14 +24,26 @@ public class UserDeviceDetailInfoDTO {
 
     private String deviceId;
 
-    private String productId;
+    private String deviceName;
 
     private String aliasName;
+
+    private String productId;
+
+    private String productName;
+
+    private String productType;
+
+    private String ip;
+
+    private String mac;
 
     private Boolean networkStatus;
 
     private String currentPresetName;
 
-    private HashMap<String, ArrayList<IProperty>> presets;
+    private HashMap<String, HashMap<String, String>> presets;
+
+    private HashMap<String, IProperty> properties;
 
 }

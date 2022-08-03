@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -47,7 +46,9 @@ public class DeviceCachedInfo {
 
     private Long lastRegisterTime;
 
-    private HashMap<String, ArrayList<IProperty>> presets;
+    private HashMap<String, HashMap<String, String>> presets;
+
+    private HashMap<String, IProperty> properties;
 
     private String currentPresetName;
 

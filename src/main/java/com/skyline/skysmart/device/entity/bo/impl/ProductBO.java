@@ -1,6 +1,5 @@
 package com.skyline.skysmart.device.entity.bo.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.skyline.skysmart.core.enums.ResultCode;
@@ -9,7 +8,7 @@ import com.skyline.skysmart.device.entity.bo.IProductBO;
 import com.skyline.skysmart.device.entity.dao.ProductDAO;
 import com.skyline.skysmart.device.entity.model.IProperty;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * [FEATURE INFO]<br/>
@@ -112,27 +111,22 @@ public class ProductBO implements IProductBO {
     /**
      * default properties in this product
      *
-     * @return ArrayList, default properties
+     * @return HashMap, default properties
      */
     @Override
-    public ArrayList<IProperty> getProperties() {
+    public HashMap<String, IProperty> getPropertyMap() {
         assertProductDAONotNull();
 
         String json = this.productDAO.getDefaultProperties();
 
-        return JSONObject.parseObject(json, new TypeReference<ArrayList<IProperty>>(){});
+        return JSONObject.parseObject(json, new TypeReference<HashMap<String, IProperty>>(){});
     }
 
     @Override
-    public void setProperties(ArrayList<IProperty> properties) {
-        assertProductDAONotNull();
-        this.productDAO.setDefaultProperties(JSON.toJSONString(properties));
-    }
+    public void setProperty(IProperty property) {
+        HashMap<String, IProperty> propertyMap = getPropertyMap();
 
-    @Override
-    public void addProperty(IProperty property) {
-        ArrayList<IProperty> properties = getProperties();
-        properties.add(property);
-        setProperties(properties);
+        propertyMap.put(property.getId(), property);
+        this.productDAO.setDefaultProperties(JSONObject.toJSONString(propertyMap));
     }
 }

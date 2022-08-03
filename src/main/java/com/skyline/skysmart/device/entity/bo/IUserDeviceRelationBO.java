@@ -6,6 +6,7 @@ import com.skyline.skysmart.user.entity.bo.interfaces.IUserBO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * [FEATURE INFO]<br/>
@@ -45,15 +46,42 @@ public interface IUserDeviceRelationBO {
 
     String getAliasName();
 
-    void setPresets(HashMap<String, ArrayList<IProperty>> presets);
+    void setProperty(String name, IProperty property);
 
-    void addPreset(String name, ArrayList<IProperty> preset);
+    void setProperty(String name, String value);
 
-    HashMap<String, ArrayList<IProperty>> getPresets();
+    /**
+     * must synchronize property when create this object or update preset or change preset
+     */
+    void syncProperty();
 
-    ArrayList<IProperty> getPreset(String name);
+    HashMap<String, IProperty> getProperties();
 
+    IProperty getProperty(String name);
+
+    void setPreset(String name, HashMap<String, String> preset);
+
+    HashMap<String, HashMap<String, String>> getPresets();
+
+    HashMap<String, String> getPreset(String name);
+
+    HashMap<String, String> getDefaultPreset();
+
+    Set<String> getCustomizablePropertyId() ;
+
+    /**
+     * change the name of current preset
+     *
+     * @param presetName String, new name of current preset
+     */
     void setCurrentPresetName(String presetName);
+
+    /**
+     * change current preset
+     *
+     * @param presetName String, other preset's name
+     */
+    void changeCurrentPreset(String presetName);
 
     String getCurrentPresetName();
 

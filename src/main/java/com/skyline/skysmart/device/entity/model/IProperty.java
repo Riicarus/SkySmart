@@ -1,5 +1,7 @@
 package com.skyline.skysmart.device.entity.model;
 
+import com.skyline.skysmart.device.entity.enums.PropertyType;
+
 import java.util.HashMap;
 
 /**
@@ -22,6 +24,15 @@ public interface IProperty {
     void setId(String id);
 
     /**
+     * determine whether it could be edit by user, or just the data device reported
+     *
+     * @return PropertyType
+     */
+    PropertyType getPropertyType();
+
+    void setPropertyType(PropertyType propertyType);
+
+    /**
      * get property detail description
      *
      * @return String, property detail
@@ -29,6 +40,10 @@ public interface IProperty {
     String getName();
 
     void setName(String name);
+
+    String getValue();
+
+    void setValue(String value);
 
     /**
      * get property value type

@@ -33,10 +33,15 @@ public class UserDeviceRelationDAO {
     @TableField("alias_name")
     private String aliasName;
 
-    // json type of preset HashMap, each preset is a list of properties
-    // like: HashMap<String, ArrayList<IProperty>>
+    // json type of preset HashMap, each preset is a hashmap of properties' name and value
+    // like: HashMap<String, HashMap<String, String>>, presetName, propertyId, propertyValue
     @TableField("presets")
     private String presets;
+
+    // json type of properties HashMap, contains all properties the device has, always follows current preset
+    // like: HashMap<String, IProperty>
+    @TableField("properties")
+    private String properties;
 
     @TableField("current_preset_name")
     private String currentPresetName;

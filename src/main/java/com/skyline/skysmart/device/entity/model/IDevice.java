@@ -1,6 +1,7 @@
 package com.skyline.skysmart.device.entity.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * [FEATURE INFO]<br/>
@@ -67,11 +68,11 @@ public interface IDevice {
     void setAuthToken(String authToken);
 
     /**
-     * device properties of preset
+     * device properties of now time
      *
-     * @return ArrayList, device properties
+     * @return HashMap, device properties
      */
-    ArrayList<IProperty> getProperties();
+    HashMap<String, IProperty> getPropertyMap();
 
-    void setProperties(ArrayList<IProperty> properties);
+    void setProperty(IProperty property);
 }

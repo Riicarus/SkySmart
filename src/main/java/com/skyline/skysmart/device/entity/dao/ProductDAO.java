@@ -33,7 +33,7 @@ public class ProductDAO {
     @TableField("produced_time")
     private Long producedTime;
 
-    // json type of properties arraylist, default value of this type
+    // json type of properties HashMap, key--propertyId, value--IProperty, default value of this type
     @TableField("default_properties")
     private String defaultProperties;
 

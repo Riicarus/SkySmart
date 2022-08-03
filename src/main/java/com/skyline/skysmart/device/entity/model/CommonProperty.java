@@ -1,5 +1,7 @@
 package com.skyline.skysmart.device.entity.model;
 
+import com.skyline.skysmart.device.entity.enums.PropertyType;
+
 import java.util.HashMap;
 
 /**
@@ -14,7 +16,9 @@ public class CommonProperty implements IProperty {
 
     private String id;
     private String name;
+    private PropertyType propertyType;
     private IValueType valueType;
+    private String value;
     private HashMap<String, String> expands;
 
     /**
@@ -30,6 +34,16 @@ public class CommonProperty implements IProperty {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public PropertyType getPropertyType() {
+        return this.propertyType;
+    }
+
+    @Override
+    public void setPropertyType(PropertyType propertyType) {
+        this.propertyType = propertyType;
     }
 
     /**
@@ -60,6 +74,16 @@ public class CommonProperty implements IProperty {
     @Override
     public void setValueType(IValueType valueType) {
         this.valueType = valueType;
+    }
+
+    @Override
+    public String getValue() {
+        return this.value;
+    }
+
+    @Override
+    public void setValue(String value) {
+        this.value = value;
     }
 
     /**
