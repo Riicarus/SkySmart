@@ -129,6 +129,7 @@ public class UserDeviceRelationBO implements IUserDeviceRelationBO {
         }
 
         property.setValue(value);
+        setProperty(name, property);
     }
 
     /**
@@ -147,7 +148,13 @@ public class UserDeviceRelationBO implements IUserDeviceRelationBO {
         assertRelationDAONotNull();
 
         String properties = this.userDeviceRelationDAO.getProperties();
-        return JSONObject.parseObject(properties, new TypeReference<HashMap<String, IProperty>>(){});
+        HashMap<String, IProperty> propertyMap = JSONObject.parseObject(properties, new TypeReference<HashMap<String, IProperty>>(){});
+
+        if (propertyMap.isEmpty() && "default".equals(getCurrentPresetName())) {
+            return this.deviceBO.getProductBO().getPropertyMap();
+        }
+
+        return propertyMap;
     }
 
     @Override

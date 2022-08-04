@@ -157,9 +157,12 @@ public class UserDeviceRelationDBService implements IUserDeviceRelationDBService
         ArrayList<UserDeviceInfoDTO> infoList = new ArrayList<>();
 
         List<Object> deviceCachedInfoList = redisTemplate.opsForHash().values(RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix());
-        for (Object deviceCachedInfo : deviceCachedInfoList) {
-            if (uid.equals(((DeviceCachedInfo) deviceCachedInfo).getUid())) {
-                infoList.add(userDeviceRelationDataConverter.castToDeviceUserInfoDTO((DeviceCachedInfo) deviceCachedInfo));
+        List<IUserDeviceRelationBO> relationBOList = new ArrayList<>();
+        deviceCachedInfoList.forEach(cachedInfo ->
+                relationBOList.add(userDeviceRelationDataConverter.castToUserDeviceRelationBO((DeviceCachedInfo) cachedInfo)));
+        for (IUserDeviceRelationBO relationBO : relationBOList) {
+            if (uid.equals(relationBO.getUid())) {
+                infoList.add(userDeviceRelationDataConverter.castToDeviceUserInfoDTO(relationBO));
             }
         }
 
@@ -181,7 +184,8 @@ public class UserDeviceRelationDBService implements IUserDeviceRelationDBService
 
         DeviceCachedInfo deviceCachedInfo = (DeviceCachedInfo) redisTemplate.opsForHash().get(K, HK);
         if (deviceCachedInfo != null) {
-            userDeviceDetailInfoDTO = userDeviceRelationDataConverter.castToDeviceUserDetailInfoDTO(deviceCachedInfo, true);
+            IUserDeviceRelationBO cachedUserDeviceRelationBO = userDeviceRelationDataConverter.castToUserDeviceRelationBO(deviceCachedInfo);
+            userDeviceDetailInfoDTO = userDeviceRelationDataConverter.castToDeviceUserDetailInfoDTO(cachedUserDeviceRelationBO, true);
         } else {
             IUserDeviceRelationBO userDeviceRelationBO = userDeviceRelationDBService.getRelationBOByDeviceId(deviceId);
             userDeviceDetailInfoDTO = userDeviceRelationDataConverter.castToDeviceUserDetailInfoDTO(userDeviceRelationBO, false);

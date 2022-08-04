@@ -4,7 +4,6 @@ import com.skyline.skysmart.device.entity.dao.UserDeviceRelationDAO;
 import com.skyline.skysmart.device.entity.model.IProperty;
 import com.skyline.skysmart.user.entity.bo.interfaces.IUserBO;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 

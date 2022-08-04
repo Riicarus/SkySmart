@@ -130,7 +130,7 @@ public class UserService implements IUserService {
     public void register(UserAddParam userAddParam) {
         IUserBO userBO = userDataConverter.castToIUserBO(userAddParam, false);
 
-        int res = userMapper.insert(userBO.getUser());
+        int res = userMapper.insert(userBO.getUserDAO());
         if (res != 1) {
             Asserts.fail(ResultCode.FAILED);
         }
@@ -146,7 +146,7 @@ public class UserService implements IUserService {
     public void registerAdmin(UserAddParam userAddParam) {
         IUserBO userBO = userDataConverter.castToIUserBO(userAddParam, true);
 
-        int res = userMapper.insert(userBO.getUser());
+        int res = userMapper.insert(userBO.getUserDAO());
         if (res != 1) {
             Asserts.fail(ResultCode.FAILED);
         }
@@ -163,7 +163,7 @@ public class UserService implements IUserService {
         IUserBO userBO = getUserBOByUid(uid);
 
         userBO.setPassword(password);
-        int res = userMapper.updateById(userBO.getUser());
+        int res = userMapper.updateById(userBO.getUserDAO());
         if (res != 1) {
             Asserts.fail(ResultCode.FAILED);
         }
@@ -180,7 +180,7 @@ public class UserService implements IUserService {
         IUserBO userBO = getUserBOByUid(uid);
 
         userBO.setUsername(username);
-        int res = userMapper.updateById(userBO.getUser());
+        int res = userMapper.updateById(userBO.getUserDAO());
         if (res != 1) {
             Asserts.fail(ResultCode.FAILED);
         }

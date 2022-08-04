@@ -1,5 +1,8 @@
 package com.skyline.skysmart.device.entity.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.util.HashMap;
 
 /**
@@ -10,6 +13,8 @@ import java.util.HashMap;
  * @create 2022/7/27 9:11
  * @since 1.0.0
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommonValueType implements IValueType {
 
     private String type;

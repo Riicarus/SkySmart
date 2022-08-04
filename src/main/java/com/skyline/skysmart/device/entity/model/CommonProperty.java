@@ -1,6 +1,8 @@
 package com.skyline.skysmart.device.entity.model;
 
 import com.skyline.skysmart.device.entity.enums.PropertyType;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 
@@ -12,6 +14,8 @@ import java.util.HashMap;
  * @create 2022/7/27 9:05
  * @since 1.0.0
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommonProperty implements IProperty {
 
     private String id;

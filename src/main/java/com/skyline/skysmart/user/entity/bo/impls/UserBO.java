@@ -19,12 +19,12 @@ public class UserBO implements IUserBO {
     private UserDAO userDAO;
 
     @Override
-    public void mapUser(UserDAO userDAO) {
+    public void mapUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
     @Override
-    public UserDAO getUser() {
+    public UserDAO getUserDAO() {
         assertUserNotEmpty();
         return userDAO;
     }

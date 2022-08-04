@@ -42,7 +42,7 @@ public class UserDataConverter {
      */
     public IUserBO constructUserBO(UserDAO userDAO) {
         IUserBO userBO = new UserBO();
-        userBO.mapUser(userDAO);
+        userBO.mapUserDAO(userDAO);
         return userBO;
     }
 

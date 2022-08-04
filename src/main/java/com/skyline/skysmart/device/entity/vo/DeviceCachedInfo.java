@@ -1,11 +1,12 @@
 package com.skyline.skysmart.device.entity.vo;
 
-import com.skyline.skysmart.device.entity.model.IProperty;
+import com.skyline.skysmart.device.entity.dao.DeviceDAO;
+import com.skyline.skysmart.device.entity.dao.ProductDAO;
+import com.skyline.skysmart.device.entity.dao.UserDeviceRelationDAO;
+import com.skyline.skysmart.user.entity.dao.UserDAO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashMap;
 
 /**
  * [FEATURE INFO]<br/>
@@ -20,36 +21,18 @@ import java.util.HashMap;
 @NoArgsConstructor
 public class DeviceCachedInfo {
 
-    private String relationId;
+    private UserDeviceRelationDAO userDeviceRelationDAO;
 
-    private String aliasName;
+    private UserDAO userDAO;
 
-    private String deviceId;
+    private DeviceDAO deviceDAO;
 
-    private String deviceName;
-
-    private String uid;
-
-    private String username;
-
-    private String productId;
-
-    private String productName;
-
-    private String productType;
+    private ProductDAO productDAO;
 
     private String ip;
 
     private String mac;
 
-    private Long createTime;
-
-    private Long lastRegisterTime;
-
-    private HashMap<String, HashMap<String, String>> presets;
-
-    private HashMap<String, IProperty> properties;
-
-    private String currentPresetName;
+    private String authToken;
 
 }

@@ -2,8 +2,6 @@ package com.skyline.skysmart.user.entity.bo.interfaces;
 
 import com.skyline.skysmart.user.entity.dao.UserDAO;
 
-import java.util.ArrayList;
-
 /**
  * [FEATURE INFO]<br/>
  * UserBO interface
@@ -14,9 +12,9 @@ import java.util.ArrayList;
  */
 public interface IUserBO {
 
-    void mapUser(UserDAO userDAO);
+    void mapUserDAO(UserDAO userDAO);
 
-    UserDAO getUser();
+    UserDAO getUserDAO();
 
     String getUid();
 
