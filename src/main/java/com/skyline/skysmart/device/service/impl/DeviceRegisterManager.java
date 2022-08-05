@@ -70,13 +70,24 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
      */
     @Override
     public void register(IDeviceRegisterMessage deviceRegisterMessage) {
-        String deviceId = deviceRegisterMessage.getDeviceId();
-        IUserDeviceRelationBO userDeviceRelationBO = userDeviceRelationDBService.getRelationBOByDeviceId(deviceId);
+        DeviceCachedInfo deviceCachedInfo;
+        IUserDeviceRelationBO relationBO;
 
-        String key = RedisKeyPrefix.DEVICE_REGISTER_INFO_HASH_KEY.getKeyPrefix() + userDeviceRelationBO.getDeviceId();
-        DeviceCachedInfo deviceCachedInfo = userDeviceRelationDataConverter.castToDeviceCachedInfo(userDeviceRelationBO, deviceRegisterMessage);
-        redisTemplate.opsForHash().put(RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix(), key, deviceCachedInfo);
-        redisTemplate.expire(RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix(), 2, TimeUnit.MINUTES);
+        String K = RedisKeyPrefix.DEVICE_REGISTER_INFO_KEY.getKeyPrefix();
+        String HK = RedisKeyPrefix.DEVICE_REGISTER_INFO_HASH_KEY.getKeyPrefix() + deviceRegisterMessage.getDeviceId();
+        String deviceId = deviceRegisterMessage.getDeviceId();
+
+        deviceCachedInfo = (DeviceCachedInfo) redisTemplate.opsForHash().get(K, HK);
+        if (deviceCachedInfo != null) {
+            relationBO = userDeviceRelationDataConverter.castToUserDeviceRelationBO(deviceCachedInfo);
+        } else {
+            relationBO = userDeviceRelationDBService.getRelationBOByDeviceId(deviceId);
+        }
+
+        deviceCachedInfo = userDeviceRelationDataConverter.castToDeviceCachedInfo(relationBO, deviceRegisterMessage);
+
+        redisTemplate.opsForHash().put(K, HK, deviceCachedInfo);
+        redisTemplate.expire(K, 2, TimeUnit.MINUTES);
 
         deviceDBService.updateLastRegisterTime(deviceId, deviceRegisterMessage.getRegisterTime());
     }

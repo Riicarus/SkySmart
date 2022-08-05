@@ -19,27 +19,14 @@ import lombok.Setter;
 public class DeviceRegisterMessage implements IDeviceRegisterMessage {
 
     private String deviceId;
-    private String deviceName;
-    private String productId;
     private String ip;
     private String mac;
     private String authToken;
     private Long registerTime;
-    private String currentPresetName;
 
     @Override
     public String getDeviceId() {
         return deviceId;
-    }
-
-    @Override
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    @Override
-    public String getProductId() {
-        return productId;
     }
 
     @Override

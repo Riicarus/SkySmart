@@ -72,6 +72,7 @@ public class UserDeviceRelationDataConverter {
         deviceCachedInfo.setIp(deviceRegisterMessage.getIp());
         deviceCachedInfo.setMac(deviceRegisterMessage.getMac());
         deviceCachedInfo.setAuthToken(deviceRegisterMessage.getAuthToken());
+        deviceCachedInfo.getDeviceDAO().setLastRegisterTime(deviceRegisterMessage.getRegisterTime());
 
         return deviceCachedInfo;
     }

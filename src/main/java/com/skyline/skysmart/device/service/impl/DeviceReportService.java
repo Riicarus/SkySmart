@@ -1,7 +1,5 @@
 package com.skyline.skysmart.device.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.skyline.skysmart.core.enums.RedisKeyPrefix;
 import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.core.exception.Asserts;

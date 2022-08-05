@@ -12,10 +12,6 @@ public interface IDeviceRegisterMessage {
 
     String getDeviceId();
 
-    String getDeviceName();
-
-    String getProductId();
-
     String getIp();
 
     String getMac();
