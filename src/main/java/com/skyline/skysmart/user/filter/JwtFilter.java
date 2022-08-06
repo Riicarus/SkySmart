@@ -1,5 +1,6 @@
 package com.skyline.skysmart.user.filter;
 
+import com.skyline.skysmart.core.enums.ResultCode;
 import com.skyline.skysmart.user.shiro.JwtToken;
 import com.skyline.skysmart.core.exception.Asserts;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -35,7 +36,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 return true;
             } catch (Exception e) {
                 //token 错误   非法访问
-                Asserts.fail("Unauthorized access!");
+                Asserts.fail(ResultCode.NO_PERMISSION);
             }
         }
 

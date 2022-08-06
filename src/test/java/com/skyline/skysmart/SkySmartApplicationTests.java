@@ -84,7 +84,7 @@ class SkySmartApplicationTests {
     @Test
     void generateDefaultProperties() {
 
-        CommonValueType temperatureValueType = new CommonValueType("int", "75", "-15", "`C", new HashMap<>());
+/*        CommonValueType temperatureValueType = new CommonValueType("int", "75", "-15", "`C", new HashMap<>());
         CommonValueType humidityValueType = new CommonValueType("int", "100", "0", "`%", new HashMap<>());
         CommonValueType lightValueType = new CommonValueType("int", "1", "0", "", new HashMap<>());
         IProperty temperatureProperty = new CommonProperty("temperature", "temperature", PropertyType.DEVICE_ONLY, temperatureValueType, "0", new HashMap<>());
@@ -94,7 +94,13 @@ class SkySmartApplicationTests {
         HashMap<String, IProperty> defaultProperties = new HashMap<>();
         defaultProperties.put(temperatureProperty.getId(), temperatureProperty);
         defaultProperties.put(humidityProperty.getId(), humidityProperty);
-        defaultProperties.put(lightProperty.getId(), lightProperty);
+        defaultProperties.put(lightProperty.getId(), lightProperty);*/
+
+        CommonValueType aliveDeviceNumberValue = new CommonValueType("int", "20", "0", "", new HashMap<>());
+        IProperty aliveDeviceNumberProperty = new CommonProperty("alive-device-number", "number of alive device registered to one gateway",
+                PropertyType.DEVICE_ONLY, aliveDeviceNumberValue, "0", new HashMap<>());
+        HashMap<String, IProperty> defaultProperties = new HashMap<>();
+        defaultProperties.put(aliveDeviceNumberProperty.getId(), aliveDeviceNumberProperty);
 
         System.out.println(JSONObject.toJSONString(defaultProperties));
     }

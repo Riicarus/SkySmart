@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.skyline.skysmart.core.enums.ResultCode;
+import com.skyline.skysmart.core.exception.Asserts;
 
 import java.util.Date;
 import java.util.Map;
@@ -47,7 +49,14 @@ public class JwtUtils {
      * @return verify
      */
     public static DecodedJWT verify(String token) {
-        return JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
+        DecodedJWT decodedJWT = null;
+        try {
+            decodedJWT = JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
+        } catch (Exception e) {
+            Asserts.fail(ResultCode.VALIDATE_FAILED);
+        }
+
+        return decodedJWT;
     }
 
     /**
