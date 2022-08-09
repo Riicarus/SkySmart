@@ -1,5 +1,6 @@
 package com.skyline.skysmart.device.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,8 +18,16 @@ public interface IDeviceDataService {
      * list all sensor's data
      *
      * @param gatewayId String, deviceId
-     * @return HashMap, key: deviceId + propertyId, value: propertyValue
+     * @return HashMap, key_outer: deviceId, key_inner: propertyId, value: propertyValue
      */
-    HashMap<String, String> listAllSensorData(String gatewayId);
+    HashMap<String, HashMap<String, String>> listAllSensorData(String gatewayId);
+
+    /**
+     * list all sensors' info, like: deviceId-aliasName-propertyIds
+     *
+     * @param gatewayId String, deviceId of gateway
+     * @return ArrayList
+     */
+    ArrayList<String> listAllSensorInfo(String gatewayId);
 
 }

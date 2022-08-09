@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -30,13 +31,23 @@ public class DeviceDataController {
         this.deviceDataService = deviceDataService;
     }
 
-    @GetMapping("device/{gatewayId}/sensor/data")
+    @GetMapping("/device/{gatewayId}/sensor/data")
     @ApiOperation("get all sensor's data under this gateway")
-    public ResponseResult<HashMap<String, String>> listAllSensorData(
+    public ResponseResult<HashMap<String, HashMap<String, String>>> listAllSensorData(
             @PathVariable("gatewayId") String gatewayId
     ) {
-        HashMap<String, String> sensorDataMap = deviceDataService.listAllSensorData(gatewayId);
+        HashMap<String, HashMap<String, String>> sensorDataMap = deviceDataService.listAllSensorData(gatewayId);
 
         return ResponseResult.success(sensorDataMap);
+    }
+
+    @GetMapping("/device/{gatewayId}/sensor/info")
+    @ApiOperation("get all sensors' info under this gateway")
+    public ResponseResult<ArrayList<String>> listAllSensorInfo(
+            @PathVariable("gatewayId") String gatewayId
+    ) {
+        ArrayList<String> sensorInfoList = deviceDataService.listAllSensorInfo(gatewayId);
+
+        return ResponseResult.success(sensorInfoList);
     }
 }

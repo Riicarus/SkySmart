@@ -118,4 +118,10 @@ class SkySmartApplicationTests {
 
         JSONObject.parseObject(JSONObject.toJSONString(deviceReportMessage), new TypeReference<DeviceReportMessage>(){});
     }
+
+    @Test
+    void testSubstring() {
+        String str = "[\"6b143ad4-8573-4661-8642-b01dac8cc224*ligth_T/H_sensor*light/temperature/humidity\"]";
+        System.out.println(str.substring(2, str.length() - 4));
+    }
 }
