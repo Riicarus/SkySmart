@@ -3,8 +3,6 @@ package com.skyline.skysmart;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.skyline.skysmart.device.entity.bo.IUserDeviceRelationBO;
-import com.skyline.skysmart.device.entity.bo.impl.UserDeviceRelationBO;
 import com.skyline.skysmart.device.entity.enums.PropertyType;
 import com.skyline.skysmart.device.entity.message.impl.DeviceReportMessage;
 import com.skyline.skysmart.device.entity.model.CommonProperty;

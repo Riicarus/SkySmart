@@ -21,6 +21,7 @@ public class DeviceRegisterMessage implements IDeviceRegisterMessage {
     private String deviceId;
     private String ip;
     private String mac;
+    private String gatewayDeviceId;
     private String authToken;
     private Long registerTime;
 
@@ -37,6 +38,11 @@ public class DeviceRegisterMessage implements IDeviceRegisterMessage {
     @Override
     public String getMac() {
         return mac;
+    }
+
+    @Override
+    public String getGatewayDeviceId() {
+        return gatewayDeviceId;
     }
 
     @Override

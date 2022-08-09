@@ -51,6 +51,7 @@ public class UserDeviceRelationDataConverter {
         deviceBO.mapProductBO(productBO);
         deviceBO.setIp(deviceCachedInfo.getIp());
         deviceBO.setMac(deviceCachedInfo.getMac());
+        deviceBO.setGatewayDeviceId(deviceCachedInfo.getGatewayDeviceId());
         deviceBO.setAuthToken(deviceCachedInfo.getAuthToken());
         relationBO.mapDeviceBO(deviceBO);
 
@@ -71,6 +72,7 @@ public class UserDeviceRelationDataConverter {
         deviceCachedInfo.setUserDAO(userDeviceRelationBO.getUserBO().getUserDAO());
         deviceCachedInfo.setIp(deviceRegisterMessage.getIp());
         deviceCachedInfo.setMac(deviceRegisterMessage.getMac());
+        deviceCachedInfo.setGatewayDeviceId(deviceRegisterMessage.getGatewayDeviceId());
         deviceCachedInfo.setAuthToken(deviceRegisterMessage.getAuthToken());
         deviceCachedInfo.getDeviceDAO().setLastRegisterTime(deviceRegisterMessage.getRegisterTime());
 
@@ -86,6 +88,7 @@ public class UserDeviceRelationDataConverter {
         deviceCachedInfo.setUserDAO(userDeviceRelationBO.getUserBO().getUserDAO());
         deviceCachedInfo.setIp(userDeviceRelationBO.getDeviceBO().getIp());
         deviceCachedInfo.setMac(userDeviceRelationBO.getDeviceBO().getMac());
+        deviceCachedInfo.setGatewayDeviceId(userDeviceRelationBO.getDeviceBO().getGatewayDeviceId());
         deviceCachedInfo.setAuthToken(userDeviceRelationBO.getDeviceBO().getAuthToken());
 
         return deviceCachedInfo;

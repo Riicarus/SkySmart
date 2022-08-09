@@ -16,6 +16,8 @@ public interface IDeviceRegisterMessage {
 
     String getMac();
 
+    String getGatewayDeviceId();
+
     String getAuthToken();
 
     Long getRegisterTime();

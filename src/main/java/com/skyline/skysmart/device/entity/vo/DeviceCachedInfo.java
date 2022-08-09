@@ -33,6 +33,8 @@ public class DeviceCachedInfo {
 
     private String mac;
 
+    private String gatewayDeviceId;
+
     private String authToken;
 
 }

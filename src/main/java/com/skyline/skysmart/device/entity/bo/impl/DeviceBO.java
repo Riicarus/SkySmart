@@ -27,6 +27,8 @@ public class DeviceBO implements IDeviceBO {
 
     private String mac;
 
+    private String gatewayDeviceId;
+
     private String authToken;
 
     @Override
@@ -168,6 +170,21 @@ public class DeviceBO implements IDeviceBO {
     @Override
     public void setMac(String mac) {
         this.mac = mac;
+    }
+
+    /**
+     * gateway's device id
+     *
+     * @return String, deviceId
+     */
+    @Override
+    public String getGatewayDeviceId() {
+        return gatewayDeviceId;
+    }
+
+    @Override
+    public void setGatewayDeviceId(String deviceId) {
+        this.gatewayDeviceId = deviceId;
     }
 
     /**

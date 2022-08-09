@@ -205,7 +205,8 @@ public class UserDeviceRelationBO implements IUserDeviceRelationBO {
 
         HashMap<String, IProperty> defaultProperties = getDeviceBO().getPropertyMap();
         for (Map.Entry<String, IProperty> entry : defaultProperties.entrySet()) {
-            if (entry.getValue().getPropertyType().equals(PropertyType.ALL)) {
+            boolean isPresetValue = entry.getValue().getPropertyType().equals(PropertyType.USER) || entry.getValue().getPropertyType().equals(PropertyType.ALL);
+            if (isPresetValue) {
                 defaultPreset.put(entry.getKey(), entry.getValue().getValue());
             }
         }

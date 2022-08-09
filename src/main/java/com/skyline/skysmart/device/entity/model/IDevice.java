@@ -59,6 +59,15 @@ public interface IDevice {
     void setMac(String mac);
 
     /**
+     * gateway's device id
+     *
+     * @return String, deviceId
+     */
+    String getGatewayDeviceId();
+
+    void setGatewayDeviceId(String deviceId);
+
+    /**
      * device auth token, used to verify device
      *
      * @return String auth token

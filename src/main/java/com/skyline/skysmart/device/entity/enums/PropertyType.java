@@ -11,6 +11,8 @@ package com.skyline.skysmart.device.entity.enums;
 public enum PropertyType {
 
     DEVICE_ONLY("DEVICE_ONLY"),
+    SENSOR("SENSOR"),
+    USER("USER"),
     ALL("ALL");
 
     private final String type;
