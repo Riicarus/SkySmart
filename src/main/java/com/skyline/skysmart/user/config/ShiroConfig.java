@@ -28,7 +28,6 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-
     /**
      * create ShiroFilter, filter all request
      * @param defaultWebSecurityManager DefaultWebSecurityManager

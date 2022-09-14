@@ -87,7 +87,7 @@ public class DeviceRegisterManager implements IDeviceRegisterManager {
         deviceCachedInfo = userDeviceRelationDataConverter.castToDeviceCachedInfo(relationBO, deviceRegisterMessage);
 
         redisTemplate.opsForHash().put(K, HK, deviceCachedInfo);
-        redisTemplate.expire(K, 2, TimeUnit.MINUTES);
+        redisTemplate.expire(HK, 2, TimeUnit.MINUTES);
 
         deviceDBService.updateLastRegisterTime(deviceId, deviceRegisterMessage.getRegisterTime());
     }

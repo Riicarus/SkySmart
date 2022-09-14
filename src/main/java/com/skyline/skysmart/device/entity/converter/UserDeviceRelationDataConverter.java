@@ -41,6 +41,10 @@ public class UserDeviceRelationDataConverter {
     }
 
     public IUserDeviceRelationBO castToUserDeviceRelationBO(DeviceCachedInfo deviceCachedInfo) {
+        if (deviceCachedInfo == null) {
+            return new UserDeviceRelationBO();
+        }
+
         IUserDeviceRelationBO relationBO = new UserDeviceRelationBO();
         IDeviceBO deviceBO = new DeviceBO();
         IProductBO productBO = new ProductBO();
